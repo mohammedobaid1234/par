@@ -10,7 +10,7 @@
                     {{-- <h6 class="card-title">Special title treatment</h6> --}}
     
                     <p class="card-text">هنا يتم عرض واضافة الاخبار</p>
-                    <a href="#" class="btn btn-primary">عرض سجل الأخبار</a>
+                    <a href="{{route('reports.index')}}" class="btn btn-primary">عرض سجل الأخبار</a>
                     
                   </div>
                 </div>

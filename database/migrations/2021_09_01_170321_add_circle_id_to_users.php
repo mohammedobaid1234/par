@@ -14,7 +14,7 @@ class AddCircleIdToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('circle_id')->nullable()->constrained('councils')->nullOnDelete()->after('name');
+            $table->foreignId('council_id')->nullable()->constrained('councils')->nullOnDelete()->after('name');
 
         });
     }

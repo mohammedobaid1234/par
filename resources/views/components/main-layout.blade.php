@@ -11,6 +11,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="{{asset('assets/admin/plugins/fontawesome-free/css/all.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/admin/css/adminlre.min.css')}}">
+  <style>
+    .shap {
+      display: flex;
+      width: 80%;
+    }
+    .shap div{
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+    }
+    .shap h6{
+      margin-bottom: 10px
+    }
+    .shap p{
+      height: 47px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+ 
+  </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -126,10 +146,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">الصفحة الرئيسية</a></li>
+              {{-- <form action="{{route($btnAction)}}" method="GET">
+                @csrf
+                <button class="btn btn-primary" >{{$btn}}</button>
+              </form> --}}
+              {{-- <li class="breadcrumb-item"><a href="#">الصفحة الرئيسية</a></li>
               @if(isset($_SERVER['HTTP_REFERER']))
               <li class="breadcrumb-item active"><a href="">الرجوع</a></li>
-              @endif
+              @endif --}}
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
