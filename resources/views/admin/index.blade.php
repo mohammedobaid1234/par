@@ -1,4 +1,5 @@
-<x-main-layout>
+<x-main-layout :title="$title">
+  <div>Home page</div>
         <div class="container-fluid">
             <div class="row">
               <div class="col-lg-6">

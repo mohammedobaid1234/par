@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,8 +21,6 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
-Route::get('admin', function () {
-    return view('admin.index');
-});
+Route::get('admin', [HomeController::class, 'index']);
 
 require __DIR__.'/auth.php';
