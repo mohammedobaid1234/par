@@ -1,4 +1,6 @@
 <x-main-layout :title="$title">
+    <x-form-new-button label='اضافة خبر جديد' action='reports.create' />
+
     @if ($reports->count() == 0)
                 <div class="alert alert-danger">عذرا لا يوجد أخبار</div>
     @else

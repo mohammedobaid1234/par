@@ -16,20 +16,7 @@
                 @foreach ($articles as $article)       
                     <tr>
                     <th scope="row">{{$loop->first? 'الأول' : ($loop->last? 'الأخير' : $loop->iteration)}}</th>
-                    <td style="width: 80%">
-                        <div class="shap">
-                            <div >
-                                <img style="width:200px; heigh:200px" src="{{$article->image_path}}" alt="صورة" >
-                                قبل  {{$article->created_at->diffForHumans()}} 
-                            </div>
-                            <div>
-                                <h6>{{$article->title}} </h6>
-                                <p>
-                                    {{$article->body}} 
-                                </p>
-                            </div>
-                        </div>
-                    </td>
+                    <td><a href="{{$article->article_url}}">{{$article->article_url}}</a></td>
                     <td>
                         <a href='{{route('articles.edit', [$article->id])}}'><button type="button" class="btn btn-primary"><i class="far fa-edit" style="margin-right:5px"></i> تعديل</button></a>
                     </td>

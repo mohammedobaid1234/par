@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('phone_number_verified_at')->nullable();
             // $table->foreignId('circle_id')->nullable()->constrained('circles')->nullOnDelete();
             // To BIO
+            $table->string('code','4');
             $table->text('about')->nullable();
             $table->string('image_url')->nullable();
             $table->string('full_name')->nullable();

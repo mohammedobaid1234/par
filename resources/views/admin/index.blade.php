@@ -22,7 +22,7 @@
                     {{-- <h6 class="card-title">Special title treatment</h6> --}}
     
                     <p class="card-text">هنا يتم عرض واضافة مقال اليوم</p>
-                    <a href="#" class="btn btn-primary">عرض المقالات</a>
+                    <a href="{{route('articles.index')}}" class="btn btn-primary">عرض المقالات</a>
                   </div>
                 </div>
               </div>
@@ -36,7 +36,7 @@
                     {{-- <h6 class="card-title">Special title treatment</h6> --}}
     
                     <p class="card-text">هنا يتم عرض واضافة الأعضاء</p>
-                    <a href="#" class="btn btn-primary">عرض الأعضاء</a>
+                    <a href="" class="btn btn-primary">عرض الأعضاء</a>
                   </div>
                 </div>
     
@@ -48,7 +48,7 @@
                     {{-- <h6 class="card-title">Special title treatment</h6> --}}
     
                     <p class="card-text">هنا يتم عرض واضافة مقطع اليوم</p>
-                    <a href="#" class="btn btn-primary">عرض مقاطع الفيديو</a>
+                    <a href="{{route('videos.index')}}" class="btn btn-primary">عرض مقاطع الفيديو</a>
                   </div>
                 </div>
               </div>

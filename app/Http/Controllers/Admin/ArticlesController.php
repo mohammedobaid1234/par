@@ -44,18 +44,10 @@ class ArticlesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => ['required'],
-            'body' => ['required'],
-            'image' => ['required', 'image'],
+            'article_url' => ['required'],
+            
         ]);
-        if($request->hasFile('image')){
-            $uploadedFile = $request->file('image');
-            $image_url = $uploadedFile->store('/','upload');
-            $request->merge([
-                'image_url' => $image_url
-            ]);
-        }
-        // dd($request);
+        
         Article::create($request->all());
         return redirect()->route('home.index');
     }
@@ -97,20 +89,8 @@ class ArticlesController extends Controller
     {
         $article = Article::findOrFail($id);
         $request->validate([
-            'title' => ['required'],
-            'body' => ['required'],
-            'image' => ['required', 'image'],
+            'article_url' => ['required'],
         ]);
-
-       
-        if($request->hasFile('image')){
-            $uploadedFile = $request->file('image');
-            Storage::disk('upload')->delete($article->image_url);
-            $image_url = $uploadedFile->store('/','upload');
-            $request->merge([
-                'image_url' => $image_url
-            ]);
-        }
 
         $article->update($request->all());
         return redirect()->route('home.index');
@@ -124,8 +104,6 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        $article = Article::findOrFail($id);
-        Storage::disk('upload')->delete($article->image_url);
         Article::where('id', '=', $id)->delete();
         return redirect()->route('home.index');
     }
