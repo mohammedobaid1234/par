@@ -43,6 +43,7 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate([
             'title' => ['required'],
             'article_url' => ['required'],
@@ -55,7 +56,6 @@ class ArticlesController extends Controller
                 'image_url' => $image_url
             ]);
         }
-        
         Article::create($request->all());
         return redirect()->route('home.index');
     }
@@ -100,7 +100,7 @@ class ArticlesController extends Controller
         $request->validate([
             'title' => ['required'],
             'article_url' => ['required'],
-            'image' => ['required', 'image'],
+            'image' => ['nullable', 'image'],
         ]);
 
        

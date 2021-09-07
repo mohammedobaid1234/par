@@ -20,7 +20,17 @@ class Article extends Model
         'article_url',
         'image_url',
     ];
-
+    
+    public function getImagePathAttribute($value)
+    {
+        if(!$this->image_url){
+            return asset('images/placeholder.png');
+        }
+        if(stripos($this->image_url , 'http') ===  0){
+            return $this->image_url;
+        }
+        return asset('uploads/' . $this->image_url);
+    } 
     protected static function booted()
     {
         static::creating(function(Article $article) {

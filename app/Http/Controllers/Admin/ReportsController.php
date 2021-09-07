@@ -99,7 +99,7 @@ class ReportsController extends Controller
         $request->validate([
             'title' => ['required'],
             'body' => ['required'],
-            'image' => ['required', 'image'],
+            'image' => ['nullable', 'image'],
         ]);
 
        

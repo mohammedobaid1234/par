@@ -1,4 +1,5 @@
 <x-main-layout :title="$title">
+  
         <div class="container-fluid">
             <div class="row">
               <div class="col-lg-6">
@@ -23,6 +24,18 @@
     
                     <p class="card-text">هنا يتم عرض واضافة مقال اليوم</p>
                     <a href="{{route('articles.index')}}" class="btn btn-primary">عرض المقالات</a>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="m-0">قسم المجالس</h5>
+                  </div>
+                  <div class="card-body">
+                    {{-- <h6 class="card-title">Special title treatment</h6> --}}
+    
+                    <p class="card-text">هنا يتم عرض واضافة المجالس</p>
+                    <a href="{{route('councils.index')}}" class="btn btn-primary">عرض سجل المجالس</a>
+                    
                   </div>
                 </div>
               </div>

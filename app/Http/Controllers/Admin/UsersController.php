@@ -68,9 +68,11 @@ class UsersController extends Controller
     }
     public function beforeCreate()
     {
+        
         $councils = Council::whereNull('parent_id')->pluck('name','id');
         return view('admin.users.before-create',[
             'councils' => $councils,
+            'title' =>'dd'
             
         ]);
     }

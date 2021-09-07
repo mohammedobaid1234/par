@@ -47,6 +47,7 @@ Route::post('/admin/councils', [CouncilsController::class, 'store'])->name('coun
 Route::get('/admin/councils/edit/{id}', [CouncilsController::class, 'edit'])->name('councils.edit');
 Route::put('/admin/councils/{id}', [CouncilsController::class, 'update'])->name('councils.update');
 Route::delete('/admin/councils/{id}', [CouncilsController::class, 'destroy'])->name('councils.destroy');
-
-Route::get('/admin/circles/create', [CouncilsController::class, 'createCircle'])->name('circles.create');
+Route::get('/admin/sections/before-create',[CouncilsController::class, 'beforeCreate'])->name('sections.before');
+Route::get('/admin/sections/create/{id}', [CouncilsController::class, 'createSection'])->name('sections.create');
+Route::post('/admin/sections/create/{id}', [CouncilsController::class, 'sectionStore'])->name('sections.store');
 require __DIR__.'/auth.php';

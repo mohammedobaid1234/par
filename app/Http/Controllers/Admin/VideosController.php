@@ -44,9 +44,17 @@ class VideosController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'title' => ['required'],
             'video_url' => ['required'],
+            'image' => ['required', 'image'],
         ]);
-    
+        if($request->hasFile('image')){
+            $uploadedFile = $request->file('image');
+            $image_url = $uploadedFile->store('/','upload');
+            $request->merge([
+                'image_url' => $image_url
+            ]);
+        }
         Video::create($request->all());
         return redirect()->route('home.index');
     }
@@ -87,10 +95,23 @@ class VideosController extends Controller
     public function update(Request $request, $id)
     {
         $video = Video::findOrFail($id);
+
         $request->validate([
+            'title' => ['required'],
             'video_url' => ['required'],
+            'image' => ['nullable', 'image'],
         ]);
 
+       
+        if($request->hasFile('image')){
+            $uploadedFile = $request->file('image');
+            Storage::disk('upload')->delete($video->image_url);
+            $image_url = $uploadedFile->store('/','upload');
+            $request->merge([
+                'image_url' => $image_url
+            ]);
+        }
+        // dd($request);
         $video->update($request->all());
         return redirect()->route('home.index');
     }

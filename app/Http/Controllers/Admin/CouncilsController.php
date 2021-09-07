@@ -15,7 +15,7 @@ class CouncilsController extends Controller
      */
     public function index()
     {
-        $councils = Council::all();
+        $councils = Council::whereNull('parent_id')->get();
         return view('admin.councils.index', [
             'councils' => $councils
         ]);
@@ -40,15 +40,30 @@ class CouncilsController extends Controller
         return $council->children;
         // if($council->children->count())
     }
-    public function createCircle() // for create circles
-    {
-        $councils = Council::whereNull('parent_id')
-            ->pluck('name', 'id');
+    public function createSection($id) // for create circles
+    {   
+        $council = Council::whereNull('parent_id')->findOrFail($id);
+       
         // return $councils;
-        return view('admin.councils.create-circle', [
-            'councils' => $councils,
-            'title' => 'اضافة دائرة'
+        if($council->id == 3){
+            return redirect()->route('home.index');
+        }
+        return view('admin.councils.sections.create-section', [
+          
+            'title' => "اضافة $council->type",
+            'type' => $council->type,
+            'id' => $id
+           
         ]);
+    }
+    public function sectionStore(Request $request,$id)
+    {
+        $request->validate([
+            'name' => ['required']
+        ]);
+        $request->merge(['parent_id' => $id]);
+        Council::create($request->all());
+        return redirect()->back();
     }
 
 
@@ -71,6 +86,15 @@ class CouncilsController extends Controller
             $messege =  'تم اضافة مجلس جديد';
         }
         return redirect(route('councils.index'))->with('success', $messege);
+    }
+    public function beforeCreate()
+    {
+        
+        $councils = Council::where('id','<>',3)->whereNull('parent_id')->pluck('name','id');
+        return view('admin.councils.sections.before-create',[
+            'councils' => $councils,
+            'title' =>'dd'
+        ]);   
     }
 
     /**

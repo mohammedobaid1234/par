@@ -3,7 +3,7 @@
         @csrf
       @method('put')
       <x-form-image type="file" name="image" label="" value="{{$video->image_path}}"  />
-        <x-form-textarea name="title" label="عنوان الفيديو " value="{{$video->title}}"/>
+        <x-form-input name="title" label="عنوان الفيديو " value="{{$video->title}}"/>
       <x-form-input name="video_url" label="رابط الفيديو" value="{{$video->video_url}}"/>    
       <button style="padding: 10px" class="btn btn-primary">تعديل</button>
     </form>
