@@ -1,6 +1,6 @@
 <x-main-layout :title="$title" >
-    <x-form-new-button label='اضافة مقال جديد' action='articles.create' />
-    @if ($articles->count() == 0)
+    <x-form-new-button label='اضافة مقال جديد' action='newspapers.create' />
+    @if ($newspapers->count() == 0)
                 <div class="alert alert-danger">عذرا لا يوجد مقالات</div>
     @else
         <table class="table table-striped">
@@ -13,27 +13,27 @@
             </tr>
             </thead>
             <tbody>
-                @foreach ($articles as $article)       
+                @foreach ($newspapers as $newspaper)       
                     <tr>
                     <th scope="row">{{$loop->first? 'الأول' : ($loop->last? 'الأخير' : $loop->iteration)}}</th>
                     <td style="width: 80%">
                         <div class="shap">
                             <div >
-                                <img style="width:200px; heigh:200px" src="{{$article->image_path}}" alt="صورة" >
-                                قبل  {{$article->created_at->diffForHumans()}} 
+                                <img style="width:200px; heigh:200px" src="{{$newspaper->image_path}}" alt="صورة" >
+                                قبل  {{$newspaper->created_at->diffForHumans()}} 
                             </div>
                             <div>
-                                <h6>{{$article->title}} </h6>
+                                <h6>{{$newspaper->title}} </h6>
                                 <p>
-                                    <a href="{{$article->article_url}}">{{$article->article_url}} </a>
+                                    <a href="{{$newspaper->article_url}}">{{$newspaper->article_url}} </a>
                                 </p>
                             </div>
                         </div>
                     </td>
                     <td>
-                        <a href='{{route('articles.edit', [$article->id])}}'><button type="button" class="btn btn-primary"><i class="far fa-edit" style="margin-right:5px"></i> تعديل</button></a>
+                        <a href='{{route('newspapers.edit', [$newspaper->id])}}'><button type="button" class="btn btn-primary"><i class="far fa-edit" style="margin-right:5px"></i> تعديل</button></a>
                     </td>
-                    <form action="{{route('articles.destroy',[$article->id])}}" method="POST">
+                    <form action="{{route('newspapers.destroy',[$newspaper->id])}}" method="POST">
                         @method('delete')
                         @csrf
                         <td>

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Article;
+use App\Models\Newspaper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ArticlesController extends Controller
+class NewspaperController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::get();
-        return view('admin.article.index' ,[
-            'articles' => $articles,
-            'title' => 'قسم المقالات'
+        $newspapers = Newspaper::get();
+        return view('admin.newspaper.index' ,[
+            'newspapers' => $newspapers,
+            'title' => 'قسم الجريدة الكترونية'
         ]);
     }
 
@@ -30,8 +30,8 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('admin.article.create', [
-            'title' => "اضافة مقال جديد"
+        return view('admin.newspaper.create', [
+            'title' => "اضافة جريدة الكترونية جديد"
         ]);
     }
 
@@ -56,7 +56,7 @@ class ArticlesController extends Controller
             ]);
         }
         
-        Article::create($request->all());
+        Newspaper::create($request->all());
         return redirect()->route('home.index');
     }
 
@@ -79,9 +79,9 @@ class ArticlesController extends Controller
      */
     public function edit($id)
     {
-        $article = Article::findOrFail($id);
-        return view('admin.article.edit',[
-            'article' => $article,
+        $newspaper = Newspaper::findOrFail($id);
+        return view('admin.newspaper.edit',[
+            'newspaper' => $newspaper,
             'title' => 'صفحة التعديل'
         ]);
     }
@@ -95,7 +95,7 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $article = Article::findOrFail($id);
+        $newspaper = Newspaper::findOrFail($id);
 
         $request->validate([
             'title' => ['required'],
@@ -106,14 +106,14 @@ class ArticlesController extends Controller
        
         if($request->hasFile('image')){
             $uploadedFile = $request->file('image');
-            Storage::disk('upload')->delete($article->image_url);
+            Storage::disk('upload')->delete($newspaper->image_url);
             $image_url = $uploadedFile->store('/','upload');
             $request->merge([
                 'image_url' => $image_url
             ]);
         }
 
-        $article->update($request->all());
+        $newspaper->update($request->all());
         return redirect()->route('home.index');
     }
 
@@ -125,7 +125,7 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        Article::where('id', '=', $id)->delete();
+        Newspaper::where('id', '=', $id)->delete();
         return redirect()->route('home.index');
     }
 }

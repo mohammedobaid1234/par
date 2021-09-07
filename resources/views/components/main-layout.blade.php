@@ -43,7 +43,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">الرئيسة</a>
+        <a href="{{route('home.index')}}" class="nav-link">الرئيسة</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         {{-- <a href="#" class="nav-link">الرجوع</a> --}}
@@ -107,19 +107,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="{{route('reports.index')}}" class="nav-link active">
                   <i class="fas fa-newspaper"></i>
                   <p>قسم الأخبار</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="{{route('articles.index')}}" class="nav-link active">
                   <i class="fas fa-file-pdf"></i>
                   <p>قسم المقالات</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="{{route('videos.index')}}" class="nav-link active">
                   <i class="fab fa-youtube" style="color:#f00"></i>
                   <p>قسم مقاطع الفيديو</p>
                 </a>

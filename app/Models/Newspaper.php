@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Comment extends Model
+class Newspaper extends Model
 {
     use HasFactory;
     /**
@@ -15,27 +15,22 @@ class Comment extends Model
      * @var string[]
      */
     protected $fillable = [
-        'body',
+        'title', 
         'slug',
+        'newspaper_url',
         'image_url',
-        'user_id',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     protected static function booted()
     {
-        static::creating(function(Comment $comment) {
-            $slug = Str::slug($comment->body);
+        static::creating(function(Newspaper $newspaper) {
+            $slug = Str::slug($newspaper->title);
 
-            $count = Comment::where('slug', 'LIKE', "{$slug}%")->count();
+            $count = Newspaper::where('slug', 'LIKE', "{$slug}%")->count();
             if ($count) {
                 $slug .= '-' . ($count + 1);
             }
-            $comment->slug = $slug;
+            $newspaper->slug = $slug;
         });
     }
+
 }

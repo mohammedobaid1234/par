@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCircleIdToUsers extends Migration
+class AddCouncileIdToUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,6 @@ class AddCircleIdToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('council_id')->nullable()->constrained('councils')->nullOnDelete()->after('name');
-
         });
     }
 
@@ -26,7 +25,7 @@ class AddCircleIdToUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('user', function (Blueprint $table) {
             //
         });
     }

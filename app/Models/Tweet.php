@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+use Illuminate\Support\Str;
 class Tweet extends Model
 {
     use HasFactory;
@@ -17,6 +17,8 @@ class Tweet extends Model
     protected $fillable = [
         'body',
         'comments',
+        'slug',
+        'image_url',
         'likes',
         'user_id',
     ];
@@ -36,5 +38,17 @@ class Tweet extends Model
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+    protected static function booted()
+    {
+        static::creating(function(Tweet $tweet) {
+            $slug = Str::slug($tweet->body);
+
+            $count = Tweet::where('slug', 'LIKE', "{$slug}%")->count();
+            if ($count) {
+                $slug .= '-' . ($count + 1);
+            }
+            $tweet->slug = $slug;
+        });
     }
 }

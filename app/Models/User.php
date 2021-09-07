@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Support\Str;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -73,4 +73,16 @@ class User extends Authenticatable
         return $this->hasMany(Like::class);
     }
 
+    protected static function booted()
+    {
+        static::creating(function(User $user) {
+            $slug = Str::slug($user->name);
+
+            $count = User::where('slug', 'LIKE', "{$slug}%")->count();
+            if ($count) {
+                $slug .= '-' . ($count + 1);
+            }
+            $user->slug = $slug;
+        });
+    } 
 }

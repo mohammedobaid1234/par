@@ -17,7 +17,7 @@ class CreateReportsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('body');
+            $table->string('body');
             $table->string('image_url');
             $table->timestamps();
         });

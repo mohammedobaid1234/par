@@ -21,16 +21,15 @@ class CreateUsersTable extends Migration
             $table->timestamp('phone_number_verified_at')->nullable();
             // $table->foreignId('circle_id')->nullable()->constrained('circles')->nullOnDelete();
             // To BIO
-            $table->string('code','4');
             $table->text('about')->nullable();
             $table->string('image_url')->nullable();
             $table->string('full_name')->nullable();
             $table->date('birthday')->nullable();
-            $table->enum('marital_status' ,['أعزب' , 'متزوج'])->nullable();
+            $table->enum('marital_status', ['أعزب', 'متزوج'])->nullable();
             $table->enum('type', ['عضو فعال', 'عضو مجلس', 'أدمن'])->default('عضو فعال');
             $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

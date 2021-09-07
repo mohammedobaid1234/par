@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Council extends Model
 {
@@ -17,9 +18,9 @@ class Council extends Model
     protected $fillable = [
         'name',
         'slug',
-        'parent_id',  
+        'parent_id',
     ];
-    
+
     /**
      * Reverse the migrations.
      *
@@ -37,4 +38,17 @@ class Council extends Model
     {
         return $this->belongsTo(Council::class, 'parent_id');
     }
+
+    protected static function booted()
+    {
+        static::creating(function(Council $council) {
+            $slug = Str::slug($council->name);
+
+            $count = Council::where('slug', 'LIKE', "{$slug}%")->count();
+            if ($count) {
+                $slug .= '-' . ($count + 1);
+            }
+            $council->slug = $slug;
+        });
+    } 
 }
