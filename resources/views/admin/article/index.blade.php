@@ -1,4 +1,7 @@
 <x-main-layout :title="$title" >
+    @if(Session::has('success'))
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
+    @endif
     <x-form-new-button label='اضافة مقال جديد' action='articles.create' />
     @if ($articles->count() == 0)
                 <div class="alert alert-danger">عذرا لا يوجد مقالات</div>
@@ -25,7 +28,7 @@
                             <div>
                                 <h6>{{$article->title}} </h6>
                                 <p>
-                                    <a href="{{$article->article_url}}">{{$article->article_url}} </a>
+                                    <a href="http://{{$article->article_url}}">{{$article->article_url}} </a>
                                 </p>
                             </div>
                         </div>

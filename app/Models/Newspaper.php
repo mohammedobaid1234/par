@@ -32,5 +32,15 @@ class Newspaper extends Model
             $newspaper->slug = $slug;
         });
     }
+    public function getImagePathAttribute($value)
+    {
+        if(!$this->image_url){
+            return asset('images/placeholder.png');
+        }
+        if(stripos($this->image_url , 'http') ===  0){
+            return $this->image_url;
+        }
+        return asset('uploads/' . $this->image_url);
+    } 
 
 }

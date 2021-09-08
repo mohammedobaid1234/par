@@ -1,4 +1,8 @@
 <x-main-layout :title="$title">
+
+    @if(Session::has('success'))
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
+    @endif
     <x-form-new-button label='اضافة خبر جديد' action='reports.create' />
 
     @if ($reports->count() == 0)

@@ -45,7 +45,7 @@ class NewspaperController extends Controller
     {
         $request->validate([
             'title' => ['required'],
-            'article_url' => ['required'],
+            'newspaper_url' => ['required'],
             'image' => ['required', 'image'],
         ]);
         if($request->hasFile('image')){
@@ -57,7 +57,7 @@ class NewspaperController extends Controller
         }
         
         Newspaper::create($request->all());
-        return redirect()->route('home.index');
+        return redirect()->route('newspapers.index')->with(['success' => 'تم اضافة الجريدة الالكترونية بنجاح']);
     }
 
     /**
@@ -98,9 +98,9 @@ class NewspaperController extends Controller
         $newspaper = Newspaper::findOrFail($id);
 
         $request->validate([
-            'title' => ['required'],
-            'article_url' => ['required'],
-            'image' => ['required', 'image'],
+            'title' => ['required',],
+            'newspaper_url' => ['required'],
+            'image' => ['nullable', 'image'],
         ]);
 
        
@@ -113,8 +113,9 @@ class NewspaperController extends Controller
             ]);
         }
 
+
         $newspaper->update($request->all());
-        return redirect()->route('home.index');
+        return redirect()->route('newspapers.index')->with(['success' => 'تم تعديل الجريدة الالكترونية بنجاح']);
     }
 
     /**
@@ -126,6 +127,6 @@ class NewspaperController extends Controller
     public function destroy($id)
     {
         Newspaper::where('id', '=', $id)->delete();
-        return redirect()->route('home.index');
+        return redirect()->route('newspapers.index')->with(['success' => 'تم حذف الجريدة الالكترونية بنجاح']);
     }
 }

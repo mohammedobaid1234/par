@@ -56,7 +56,7 @@ class VideosController extends Controller
             ]);
         }
         Video::create($request->all());
-        return redirect()->route('home.index');
+        return redirect()->route('videos.index')->with(['success' => 'تم اضافة فيديو بنجاح']);
     }
 
     /**
@@ -113,7 +113,7 @@ class VideosController extends Controller
         }
         // dd($request);
         $video->update($request->all());
-        return redirect()->route('home.index');
+        return redirect()->route('videos.index')->with(['success' => 'تم اضافة فيديو بنجاح']);
     }
 
     /**
@@ -125,6 +125,6 @@ class VideosController extends Controller
     public function destroy($id)
     {
         Video::where('id', '=', $id)->delete();
-        return redirect()->route('home.index');
+        return redirect()->route('videos.index')->with(['success' => 'تم اضافة فيديو بنجاح']);
     }
 }

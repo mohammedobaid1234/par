@@ -49,7 +49,7 @@
                     {{-- <h6 class="card-title">Special title treatment</h6> --}}
     
                     <p class="card-text">هنا يتم عرض واضافة الأعضاء</p>
-                    <a href="" class="btn btn-primary">عرض الأعضاء</a>
+                    <a href="{{route('users.index')}}" class="btn btn-primary">عرض الأعضاء</a>
                   </div>
                 </div>
     
@@ -62,6 +62,18 @@
     
                     <p class="card-text">هنا يتم عرض واضافة مقطع اليوم</p>
                     <a href="{{route('videos.index')}}" class="btn btn-primary">عرض مقاطع الفيديو</a>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="m-0">قسم الجرائد الاكترونية</h5>
+                  </div>
+                  <div class="card-body">
+                    {{-- <h6 class="card-title">Special title treatment</h6> --}}
+    
+                    <p class="card-text">هنا يتم عرض واضافة الجريدة الالكترونية</p>
+                    <a href="{{route('newspapers.index')}}" class="btn btn-primary">عرض  الجرائد</a>
+                    
                   </div>
                 </div>
               </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Council;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CouncilsController extends Controller
@@ -33,40 +34,6 @@ class CouncilsController extends Controller
         return view('admin.councils.create-council');
     }
 
-    public function children($id)
-    {
-        // return $id;
-        $council = Council::findOrFail($id);
-        return $council->children;
-        // if($council->children->count())
-    }
-    public function createSection($id) // for create circles
-    {   
-        $council = Council::whereNull('parent_id')->findOrFail($id);
-       
-        // return $councils;
-        if($council->id == 3){
-            return redirect()->route('home.index');
-        }
-        return view('admin.councils.sections.create-section', [
-          
-            'title' => "اضافة $council->type",
-            'type' => $council->type,
-            'id' => $id
-           
-        ]);
-    }
-    public function sectionStore(Request $request,$id)
-    {
-        $request->validate([
-            'name' => ['required']
-        ]);
-        $request->merge(['parent_id' => $id]);
-        Council::create($request->all());
-        return redirect()->back();
-    }
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -87,16 +54,33 @@ class CouncilsController extends Controller
         }
         return redirect(route('councils.index'))->with('success', $messege);
     }
-    public function beforeCreate()
+    
+    public function checkChildren($id)
     {
-        
-        $councils = Council::where('id','<>',3)->whereNull('parent_id')->pluck('name','id');
-        return view('admin.councils.sections.before-create',[
-            'councils' => $councils,
-            'title' =>'dd'
-        ]);   
-    }
+        $council = Council::with('children')->findOrFail($id);
+       
+        if($council->children->count() == 0){
+            $users = $council->load('users');
+            // return $users->users;
+            return view('admin.users.index', [
+                'users' => $users->users,
+                'title' => "  كل أعضاء  $council->name "
+            ]);
 
+        }else{
+            $sections = $council->load('children');
+            // return $sections->children;
+            return view('admin.councils.show',[
+                'sections' => $sections->children,
+                'title' => "عرض جميع $council->type",
+                'type' => $council->type,
+                'link' => $council->id
+            ]);
+            // return $council;
+
+        }
+
+    }
     /**
      * Display the specified resource.
      *
@@ -116,7 +100,10 @@ class CouncilsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $council = Council::findOrFail($id);
+        return view('admin.councils.edit', [
+            'council' => $council
+        ]);
     }
 
     /**
@@ -128,7 +115,12 @@ class CouncilsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:councils,name,'.$id
+        ]);
+        $council = Council::findOrFail($id);
+        $council->update($request->all());
+        return redirect()->route('councils.index');
     }
 
     /**
@@ -139,6 +131,8 @@ class CouncilsController extends Controller
      */
     public function destroy($id)
     {
-        
+        $council = Council::findOrFail($id);
+        $council->delete();
+        return redirect()->back();
     }
 }

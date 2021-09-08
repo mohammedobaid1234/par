@@ -28,7 +28,7 @@ class Council extends Model
      */
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class,'council_id');
     }
     public function children()
     {

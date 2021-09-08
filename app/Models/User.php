@@ -30,6 +30,7 @@ class User extends Authenticatable
         'email',
         'password',
         'image_url',
+        'council_id'
     ];
 
     /**
@@ -56,7 +57,7 @@ class User extends Authenticatable
      *
      * @var void
      */
-    public function councils()
+    public function council()
     {
         return $this->belongsTo(Council::class);
     }
@@ -84,5 +85,15 @@ class User extends Authenticatable
             }
             $user->slug = $slug;
         });
+    } 
+    public function getImagePathAttribute($value)
+    {
+        if(!$this->image_url){
+            return asset('images/placeholder.png');
+        }
+        if(stripos($this->image_url , 'http') ===  0){
+            return $this->image_url;
+        }
+        return asset('uploads/' . $this->image_url);
     } 
 }

@@ -57,7 +57,7 @@ class ReportsController extends Controller
         }
         // dd($request);
         Report::create($request->all());
-        return redirect()->route('home.index');
+        return redirect()->route('reports.index')->with(['success' => 'تم اضافة العضو بنجاح']);
     }
 
     /**
@@ -113,7 +113,7 @@ class ReportsController extends Controller
         }
 
         $report->update($request->all());
-        return redirect()->route('home.index');
+        return redirect()->route('reports.index')->with(['success' => 'تم اضافة الخبر بنجاح']);
     }
 
     /**
@@ -127,6 +127,6 @@ class ReportsController extends Controller
         $report = Report::findOrFail($id);
         Storage::disk('upload')->delete($report->image_url);
         Report::where('id', '=', $id)->delete();
-        return redirect()->route('home.index');
+        return redirect()->route('reports.index')->with(['success' => 'تم اضافة العضو بنجاح']);
     }
 }

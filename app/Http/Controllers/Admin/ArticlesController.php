@@ -57,7 +57,7 @@ class ArticlesController extends Controller
             ]);
         }
         Article::create($request->all());
-        return redirect()->route('home.index');
+        return redirect()->route('articles.index')->with(['success' => 'تم اضافة المقال بنجاح']);
     }
 
     /**
@@ -114,7 +114,7 @@ class ArticlesController extends Controller
         }
 
         $article->update($request->all());
-        return redirect()->route('home.index');
+        return redirect()->route('articles.index')->with(['success' => 'تم تعديل المقال بنجاح']);
     }
 
     /**
@@ -126,6 +126,6 @@ class ArticlesController extends Controller
     public function destroy($id)
     {
         Article::where('id', '=', $id)->delete();
-        return redirect()->route('home.index');
+        return redirect()->route('articles.index')->with(['success' => 'تم اضافة المقال بنجاح']);
     }
 }

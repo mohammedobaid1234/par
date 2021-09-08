@@ -1,7 +1,10 @@
 <x-main-layout :title="$title" >
-    <x-form-new-button label='اضافة مقال جديد' action='newspapers.create' />
+    @if(Session::has('success'))
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
+    @endif
+    <x-form-new-button label='اضافة جريدة الكترونية جديد' action='newspapers.create' />
     @if ($newspapers->count() == 0)
-                <div class="alert alert-danger">عذرا لا يوجد مقالات</div>
+                <div class="alert alert-danger">عذرا لا يوجد جردائد</div>
     @else
         <table class="table table-striped">
             <thead>
@@ -25,7 +28,7 @@
                             <div>
                                 <h6>{{$newspaper->title}} </h6>
                                 <p>
-                                    <a href="{{$newspaper->article_url}}">{{$newspaper->article_url}} </a>
+                                    <a href="http://{{$newspaper->article_url}}">{{$newspaper->article_url}} </a>
                                 </p>
                             </div>
                         </div>

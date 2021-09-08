@@ -1,6 +1,8 @@
-<x-main-layout title="كل الأعضاء">
+<x-main-layout title="{{$title}}">
+    <x-form-new-button label='اضافة عضو جديد' action='users.newCreate' />
+
     @if(Session::has('success'))
-    <div class="alert alert-danger">{{ Session::get('success') }}</div>
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
     @endif
     <div class="container-fluid">
         <table class="table">
@@ -29,12 +31,23 @@
                     <th scope="row">{{ $user->name }}</th>
                     <td>{{ $user->phone_number }}</td>
                     <td>{{ $user->about }}</td>
-                    <td><img width="50" height="50" style="border-radius: 10px;" src="{{ asset('uploads/' . $user->image_url) }}" alt=""></td>
+                    <td><img width="50" height="50" style="border-radius: 10px;" src="{{ $user->image_path }}" alt=""></td>
                     <th>{{ $user->full_name }}</th>
                     <td>{{ $user->birthday }}</td>
                     <td>{{ $user->marital_status }}</td>
                     <td>{{ $user->type }}</td>
-                    <td>{{ $user->circle_id ?? '' }}</td>
+                    @if ($user->type == "عضو مجلس")    
+                    <td>
+                      
+                        @if ($user->council->parent == null)
+                           {{ $user->council->name }}
+                        @else
+                        {{ $user->council->parent->name }}[{{$user->council->name}}]
+                        @endif
+                    </td>
+                    @else
+                    <td></td>
+                    @endif
                     <td>
                         <a class="btn btn-sm btn-success" href="{{ route('users.edit', $user->id) }}">تعديل</a>
                     </td>

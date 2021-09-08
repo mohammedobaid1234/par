@@ -1,5 +1,5 @@
 <x-main-layout title="كل المجالس">
-    <x-form-new-button label='اضافة قسم جديد' action='sections.before' />
+    <x-form-new-button label='اضافة قسم تابع لمجلس' action='sections.before' />
     
 
     @if(Session::has('success'))
@@ -22,12 +22,14 @@
             <tbody>
                 @foreach($councils as $council)
                 <tr>
-                    <th scope="row">{{ $council->name }}</th>
-                    @if ($council->type !== null)
-                        
-                    <td><x-form-new-button label='اضافة  {{$council->type}} جديد' action="sections.create" :id="$council->id" /></td>
+                    <th scope="row"><a href="{{route('council.checkChildren', $council->id)}}">{{ $council->name }}</a></th>
+                    @if ($council->id == 5)
+                        <td><x-form-new-button label='اضافة نادي' action="users.newCreate"  /></td>
+                    @elseif($council->id == 3 )   
+                        <td><x-form-new-button label='اضافة  عضو' action="users.newCreate"  /></td>
+                           
                     @else
-                    <td></td>
+                         <td><x-form-new-button label='اضافة  {{$council->type}}' action="sections.create" :id="$council->id" /></td>
                     @endif
                     <td>
                         <a class="btn btn-sm btn-success" href="{{ route('councils.edit', $council->id) }}">تعديل</a>

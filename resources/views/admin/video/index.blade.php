@@ -1,4 +1,7 @@
 <x-main-layout :title="$title">
+    @if(Session::has('success'))
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
+    @endif
     <x-form-new-button label='اضافة مقطع فيديو جديد' action='videos.create' />
 
     @if ($videos->count() == 0)
@@ -26,7 +29,7 @@
                             <div>
                                 <h6>{{$video->title}} </h6>
                                 <p>
-                                    <a href="{{$video->video_url}}">{{$video->video_url}} </a>
+                                    <a href="http://{{$video->video_url}}">{{$video->video_url}} </a>
                                 </p>
                             </div>
                         </div>

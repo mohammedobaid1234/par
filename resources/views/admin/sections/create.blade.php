@@ -1,14 +1,5 @@
 <x-main-layout title="اضافة عضو في {{$name}}">
     <div class="container-fluid">
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $message)
-                <li>{{ $message }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
         <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <x-form-input name='name' label='اسم العضو' />

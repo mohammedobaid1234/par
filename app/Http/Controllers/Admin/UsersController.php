@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Council;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Contracts\Service\Attribute\Required;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
@@ -18,9 +21,10 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::with('council')->get();
         return view('admin.users.index', [
             'users' => $users,
+            'title' => 'كل الاعضاء'
         ]);
     }
     
@@ -31,44 +35,27 @@ class UsersController extends Controller
      */
     public function create($id)
     {
-       
         $council = Council::findOrFail($id);
-        // if($council->type == 'عضو مجلس'){
-        //     $selectLab = 'الدائرة';
-        // }elseif($council->type == 'جمعية'){
-        //     $selectLab = 'المحافظة';  
-        // }
-        $children = $council->load('children');
-        $children = $children->children->pluck('name', 'id');
         
-        return view('admin.users.create', [
-            'children' => $children,
-            'name' => $council->name,
-            // 'selectLab' => $selectLab,
-            'type' => $council->type
-        ]);
-        // $councils = Council::whereNull('parent_id')->pluck('name' , 'id');
-        // // return $councils;
-        // // $array = [];
-        // // $userTypes = Council::get();
-        // // foreach ($userTypes as $user) {
-        // //     if ($user->children->count() == 0) {
-        // //        if($user->parent_id == 0){
-            // //             $array[$user->id] = $user->name;
-        // //        }else{
-            // //            $counciel_name = $user->parent->name; 
-            // //             $array[$user->id] = $user->name. "[$counciel_name]";
-            // //        }
-            // //     }
-                        // // }
-            
-            // return view('admin.users.create',[
-                //     'councils' => $councils
-                // ]);
+        $children = $council->load('children');
+        
+        return $children->children;
+        // $council = Council::findOrFail($id);
+        // $children = $council->load('children');
+        // $children = $children->children->pluck('name', 'id');
+        // $name = $council->name;
+        // return view('admin.users.create', [
+        //     'children' => $children,
+        //     'name' => $council->name,
+        //     'type' => $council->type,
+        //     'title' => "اضافة عضو في $name"
+        // ]);
+        
     }
+
+    // to define what council that user want to add
     public function beforeCreate()
     {
-        
         $councils = Council::whereNull('parent_id')->pluck('name','id');
         return view('admin.users.before-create',[
             'councils' => $councils,
@@ -84,34 +71,57 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
-            'name' => 'required|min:8',
+            'name' => 'required',
             'phone_number' => 'required',
-            'about' => 'nullable|min:8',
-            'image' => 'nullable|image',
-            'full_name' => 'nullable|min:10',
-            'birthday' => 'nullable|date',
-            'type' => 'required',
-            'marital_status' => 'required',
-            'email' => 'nullable|email',
-            'password' => 'required'
+            'council_id' => 'required'
+            
         ]);
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_url = $image->store('/', 'upload');
-            $request->merge([
-                'image_url' => $image_url
-            ]);
-        }
-        $request->merge([
-            'slug' => Str::slug($request->post('name'))
-        ]);
+        
         $user = User::create(
             $request->all()
         );
-        return redirect(route('users.index'));
+        return redirect(route('users.index'))->with(['success' => 'تم اضافة العضو بنجاح']);
     }
+    public function newStore(Request $request)
+    {
+        // dd($request);
+        $request->validate([
+            'name' => 'required|unique:users,name',
+            'phone_number' => 'required|unique:users,phone_number',
+            'type' => ['required',Rule::in(['عضو مجلس','عضو فعال', 'أدمن'])],
+        ]);
+       if($request->type == 'أدمن'){
+           $request->validate([
+            'password' => 'required',
+           ]);
+        $password = Hash::make($request->password);
+        User::create([
+            'name' => $request->name,
+            'password' => $password,
+            'phone_number' => $request->phone_number,
+            'type' => $request->type
+        ]);
+        return redirect(route('users.index'))->with(['success' => 'تم اضافة العضو بنجاح']);
 
+       }
+
+        $user = User::create(
+            $request->all()
+        );
+        return redirect(route('users.index'))->with(['success' => 'تم اضافة العضو بنجاح']);;
+    }
+    // for create all users type
+    public function newCreate()
+    {   
+        $councils = Council::with('children')->whereNull('parent_id')->pluck('name', 'id');
+       
+        return view('admin.users.new-crate', [
+            'councils' => $councils,
+            'title' => "اضافة عضو"
+         ]);
+    }
     /**
      * Display the specified resource.
      *
@@ -130,10 +140,14 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
+        $councils = Council::whereNull('parent_id')->pluck('name','id');
         $user = User::findOrFail($id);
         return view('admin.users.edit', [
-            'user' => $user
+            'user' => $user,
+            'title' => 'تعديل بيانات العضو',
+            'councils' => $councils
         ]);
+        
     }
 
     /**
@@ -147,22 +161,18 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
         $request->validate([
-            'name' => 'required|min:8',
-            'phone_number' => 'required',
-            'about' => 'nullable|min:8',
-            'image' => 'nullable|image',
-            'full_name' => 'nullable|min:10',
-            'birthday' => 'nullable|date',
-            'type' => 'required',
-            'marital_status' => 'required',
-            'email' => 'nullable|email',
-            'password' => 'required'
+            'name' => 'required|unique:users,name,'. $id,
+            'phone_number' => 'required|unique:users,phone_number,'. $id,
+            'type' => ['required',Rule::in(['عضو مجلس','عضو فعال', 'أدمن'])],
         ]);
-        $request->merge([
-            'slug' => Str::slug($request->post('name'))
-        ]);
+       if($request->type == 'أدمن'){
+           $request->validate([
+            'password' => 'required',
+           ]);
+       }
+        $password = Hash::make($request->password);
         $user->update($request->all());
-        return redirect(route('users.index'));
+        return redirect(route('users.index'))->with(['success' => 'تم تعديل بيانات العضو بنجاح'])->with(['success' => 'تم اضافة العضو بنجاح']);
     }
 
     /**

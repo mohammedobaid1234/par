@@ -66,11 +66,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{ asset('assets/admin/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+        <div class="image" style="width:70px">
+          <img   src="{{ asset('uploads/logo.png') }}" class="" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a class="d-block">{{ Auth::user()->name }}</a>
         </div>
       </div>
 
@@ -124,7 +124,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>قسم مقاطع الفيديو</p>
                 </a>
               </li>
-              
+              <li class="nav-item">
+                <a href="{{route('newspapers.index')}}" class="nav-link active">
+                  <i class="fas fa-file-pdf"></i>
+                  <p>قسم الجرائد الالكترونية</p>
+                </a>
+              </li>
             </ul>
           </li>
          
@@ -200,5 +205,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('assets/admin/js/adminlte.min.js')}}"></script>
+<script src="{{asset('js/user-type.js')}}"></script>
 </body>
 </html>
