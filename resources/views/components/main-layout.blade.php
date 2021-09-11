@@ -70,7 +70,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img   src="{{ asset('uploads/logo.png') }}" class="" alt="User Image">
         </div>
         <div class="info">
-          <a href="" class="d-block">{{ Auth::user()->name }}</a>
+          {{-- <a href="" class="d-block">{{ Auth::user()->name }}</a> --}}
         </div>
       </div>
 
