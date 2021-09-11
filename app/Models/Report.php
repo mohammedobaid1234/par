@@ -20,7 +20,9 @@ class Report extends Model
         'body',
         'image_url',
     ];
-
+    
+    protected $appends =['image_path'];
+    protected $hidden = ['image_url'];
     /**
      * Get the user's first name.
      *
@@ -29,8 +31,9 @@ class Report extends Model
      */
     public function getImagePathAttribute($value)
     {
+      
         if(!$this->image_url){
-            return asset('images/placeholder.png');
+            // return asset('images/placeholder.png');
         }
         if(stripos($this->image_url , 'http') ===  0){
             return $this->image_url;
@@ -50,5 +53,6 @@ class Report extends Model
             $report->slug = $slug;
         });
     } 
+
 
 }

@@ -21,6 +21,8 @@ class Video extends Model
         'video_url',
         'image_url',
     ];
+    protected $appends =['image_path'];
+    protected $hidden = ['image_url'];
     public function getImagePathAttribute($value)
     {
         if(!$this->image_url){

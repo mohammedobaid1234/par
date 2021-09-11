@@ -22,6 +22,30 @@ class Tweet extends Model
         'likes',
         'user_id',
     ];
+    protected $appends =['image_path'];
+    protected $hidden = ['image_url'];
+    protected static function booted()
+    {
+        static::creating(function(Tweet $tweet) {
+            $slug = Str::slug($tweet->body);
+
+            $count = Tweet::where('slug', 'LIKE', "{$slug}%")->count();
+            if ($count) {
+                $slug .= '-' . ($count + 1);
+            }
+            $tweet->slug = $slug;
+        });
+
+        static::updating(function (Tweet $tweet) {
+            $slug = Str::slug($tweet->body);
+
+            $count = Tweet::where('slug', 'LIKE', "{$slug}%")->count();
+            if ($count) {
+                $slug .= '-' . ($count + 1);
+            }
+            $tweet->slug = $slug;
+        });
+    }
     /**
      * Reverse the migrations.
      *
@@ -39,16 +63,15 @@ class Tweet extends Model
     {
         return $this->hasMany(Like::class);
     }
-    protected static function booted()
+    public function getImagePathAttribute($value)
     {
-        static::creating(function(Tweet $tweet) {
-            $slug = Str::slug($tweet->body);
-
-            $count = Tweet::where('slug', 'LIKE', "{$slug}%")->count();
-            if ($count) {
-                $slug .= '-' . ($count + 1);
-            }
-            $tweet->slug = $slug;
-        });
+        if(!$this->image_url){
+            return asset('images/placeholder.png');
+        }
+        if(stripos($this->image_url , 'http') ===  0){
+            return $this->image_url;
+        }
+        return asset('uploads/' . $this->image_url);
     }
+   
 }

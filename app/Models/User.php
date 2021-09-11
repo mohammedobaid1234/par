@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -41,6 +42,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'image_url'
     ];
 
     /**
@@ -51,6 +53,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected $appends =['image_path','council_name'];
 
     /**
      * The reflations.
@@ -61,7 +64,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Council::class);
     }
-    public function tweet()
+    public function tweets()
     {
         return $this->hasMany(Tweet::class);
     }
@@ -73,7 +76,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Like::class);
     }
-
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+    public function reports()
+    {
+        return $this->belongsToMany(Report::class,'favorites');
+    }
     protected static function booted()
     {
         static::creating(function(User $user) {
@@ -95,5 +105,15 @@ class User extends Authenticatable
             return $this->image_url;
         }
         return asset('uploads/' . $this->image_url);
-    } 
+    }
+    public function getCouncilNameAttribute($id)
+    {
+        if($this->type == "عضو مجلس"){
+            if($this->council->parent == null){
+                return $this->council->name;
+            }else{
+                return $this->council->parent->name;
+            }
+        }
+    }
 }

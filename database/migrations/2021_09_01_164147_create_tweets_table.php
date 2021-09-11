@@ -17,8 +17,8 @@ class CreateTweetsTable extends Migration
             $table->id();
             $table->string('body');
             $table->string('slug')->unique();
-            $table->smallInteger('comments');
-            $table->smallInteger('likes');
+            $table->smallInteger('comments')->default(0);
+            $table->smallInteger('likes')->default(0);
             $table->string('image_url')->nullable();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();

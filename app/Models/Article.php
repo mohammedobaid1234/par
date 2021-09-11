@@ -21,8 +21,11 @@ class Article extends Model
         'image_url',
     ];
     
+    protected $appends =['image_path'];
+    protected $hidden = ['image_url'];
     public function getImagePathAttribute($value)
     {
+       
         if(!$this->image_url){
             return asset('images/placeholder.png');
         }
@@ -42,5 +45,6 @@ class Article extends Model
             }
             $article->slug = $slug;
         });
-    }    
+    }
+
 }

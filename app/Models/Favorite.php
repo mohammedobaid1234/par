@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Favorite extends Model
+class Favorite extends Pivot
 {
     use HasFactory;
     /**
@@ -17,6 +18,8 @@ class Favorite extends Model
         'user_id',
         'report_id'  
     ];
+    protected $table = 'favorites';
+
     /**
      * Reverse the migrations.
      *
@@ -24,10 +27,10 @@ class Favorite extends Model
      */
     public function user()
     {
-        $this->belongsTo(User::class);
+        $this->belongsToMany(User::class,'favorites','user_id');
     }
     public function report()
     {
-        $this->belongsTo('reports');
+        $this->belongsToMany(Report::class,'favorites','report_id','user');
     }
 }
