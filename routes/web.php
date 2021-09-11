@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Admin\VideosController;
 use App\Http\Controllers\Admin\NewspaperController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\SectionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,9 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', [AuthenticatedSessionController::class, 'create']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

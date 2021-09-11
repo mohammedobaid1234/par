@@ -1,14 +1,14 @@
 <x-main-layout :title="$title">
-    <x-form-new-button label="اضافة {{$type}}" action='sections.create' :id="$link" />
+    <x-form-new-button label="اضافة أقسام" action='sections.create' :id="$link" />
 
     @if ($sections->count() == 0)
-                <div class="alert alert-danger">عذرا لا يوجد  {{$type}}</div>
+                <div class="alert alert-danger">عذرا لا يوجد  أقسام</div>
     @else
         <table class="table table-striped">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">{{$type}}</th>
+                <th scope="col">أقسام</th>
                 <th scope="col"></th>       
             </tr>
             </thead>

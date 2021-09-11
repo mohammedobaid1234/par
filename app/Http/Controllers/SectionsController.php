@@ -40,7 +40,7 @@ class SectionsController extends Controller
         }
         return view('admin.sections.create-section', [
           
-            'title' => "اضافة $council->type",
+            'title' => "اضافة قسم",
             'type' => $council->type,
             'id' => $id
            
@@ -103,7 +103,7 @@ class SectionsController extends Controller
         $type = $type->parent->type ;
         return view('admin.sections.edit',[
             'section' => $section ,
-            'title' => " تعديل ال$type",
+            'title' => " تعديل القسم",
             'type' => "ال".$type   
         ]);
     }

@@ -138,7 +138,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
-         
+          <li style="margin-top:10px">
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              
+              <x-dropdown-link :href="route('logout')"
+              onclick="event.preventDefault();
+                                  this.closest('form').submit();">
+              <i class="fas fa-sign-out-alt"></i>
+
+                تسجيل خروج
+              </x-dropdown-link>
+          </form>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

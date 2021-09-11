@@ -75,7 +75,7 @@ class CouncilsController extends Controller
             // return $sections->children;
             return view('admin.councils.show',[
                 'sections' => $sections->children,
-                'title' => "عرض جميع $council->type",
+                'title' => "عرض جميع الاقسام",
                 'type' => $council->type,
                 'link' => $council->id
             ]);
