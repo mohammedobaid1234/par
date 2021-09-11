@@ -47,5 +47,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{$articles->withQueryString()->links()}}
+
     @endif
 </x-main-layout>

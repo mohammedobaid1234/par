@@ -6,7 +6,7 @@
             <x-form-input name='phone_number' label='رقم الجوال' />
             @if ($children->count() > 0)  
             <div class="form-group">
-                <label for="name">اختر {{$type}}</label>
+                <label for="name">اختر القسم</label>
                 <select id="select1" name="council_id" class="form-control">
                     @foreach($children as $key => $value)
                     <option class="form-group" value={{$key}}>{{$value}}</option>

@@ -45,9 +45,10 @@ Route::prefix('admin')
     
     Route::resource('/councils', CouncilsController::class);
     
+    Route::get('section/new-create', [SectionsController::class,'newCreate'])->name('sections.new-create');
     Route::get('/sections/before-create',[SectionsController::class, 'beforeCreate'])->name('sections.before');
-    Route::post('/sections/create/{id}', [SectionsController::class, 'sectionStore'])->name('sections.store');
     Route::resource('/sections', SectionsController::class);
+    Route::post('/sections/create/{id}', [SectionsController::class, 'sectionStore'])->name('sections.store');
     Route::get('/sections/create/{id}', [SectionsController::class, 'createSection'])->name('sections.create');
     
     Route::get('/councils/show/{id}', [CouncilsController::class, 'checkChildren'])->name('council.checkChildren');

@@ -16,7 +16,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::get();
+        $articles = Article::orderBy('created_at','desc')->paginate(10);;
         return view('admin.article.index' ,[
             'articles' => $articles,
             'title' => 'قسم المقالات'
@@ -126,6 +126,6 @@ class ArticlesController extends Controller
     public function destroy($id)
     {
         Article::where('id', '=', $id)->delete();
-        return redirect()->route('articles.index')->with(['success' => 'تم اضافة المقال بنجاح']);
+        return redirect()->route('articles.index')->with(['success' => 'تم حذف المقال بنجاح']);
     }
 }

@@ -60,7 +60,15 @@
                     </td>
                 </tr>
                 @endforeach
+
             </tbody>
         </table>
+        @if($users instanceof \Illuminate\Pagination\AbstractPaginator)
+
+        {{$users->withQueryString()->links()}}
+     
+
+        @endif
+
     </div>
 </x-main-layout>

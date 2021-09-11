@@ -101,9 +101,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="{{route('users.index')}}" class="nav-link active">
                   <i class="fas fa-users"></i>
                   <p>قسم الأعضاء</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('councils.index')}}" class="nav-link active">
+                  <i class="fas fa-users"></i>
+                  <p>قسم المجالس</p>
                 </a>
               </li>
               <li class="nav-item">

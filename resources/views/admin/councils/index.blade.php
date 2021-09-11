@@ -3,7 +3,7 @@
     
 
     @if(Session::has('success'))
-    <div class="alert alert-danger">{{ Session::get('success') }}</div>
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
     @endif
     <div class="container-fluid">
         <table class="table">
@@ -23,14 +23,17 @@
                 @foreach($councils as $council)
                 <tr>
                     <th scope="row"><a href="{{route('council.checkChildren', $council->id)}}">{{ $council->name }}</a></th>
-                    @if ($council->id == 5)
+                    {{-- @if ($council->id == 5)
                         <td><x-form-new-button label='اضافة نادي' action="users.newCreate"  /></td>
                     @elseif($council->id == 3 )   
                         <td><x-form-new-button label='اضافة  عضو' action="users.newCreate"  /></td>
                            
                     @else
                          <td><x-form-new-button label='اضافة  {{$council->type}}' action="sections.create" :id="$council->id" /></td>
-                    @endif
+                    @endif --}}
+                    <td>
+                        <a href="{{route('users.create', $council->id)}}" class="btn btn-primary">اضافة عضو</a>
+                    </td>
                     <td>
                         <a class="btn btn-sm btn-success" href="{{ route('councils.edit', $council->id) }}">تعديل</a>
                     </td>
@@ -45,5 +48,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{$councils->withQueryString()->links()}}
+
     </div>
 </x-main-layout>

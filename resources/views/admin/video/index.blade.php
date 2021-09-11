@@ -48,5 +48,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{$videos->withQueryString()->links()}}
+        
     @endif
 </x-main-layout>

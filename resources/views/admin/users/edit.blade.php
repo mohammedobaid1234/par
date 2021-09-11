@@ -29,6 +29,7 @@
         <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('put')
+              <img src="{{old('image', $user->phone_number ?? null)}}" style="width: 100px; height: 100px">
             <x-form-input name='name' label='اسم العضو' :value="$user->name"/>
             <x-form-input name='phone_number' label='رقم الجوال' :value="$user->phone_number"/>
             <label for="" style="padding-right: 10px">أختر نوع العضو</label>

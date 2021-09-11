@@ -16,7 +16,15 @@ class SectionsController extends Controller
     {
         //
     }
-
+    public function newCreate()
+    {
+        $councils = Council::whereNull('parent_id')->pluck('name','id');
+        // return $councils;
+        return view('admin.sections.new-create', [
+            'councils' => $councils,
+            'title' => 'اضافة قسم تابع لمجلس'
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -45,13 +53,13 @@ class SectionsController extends Controller
         ]);
         $request->merge(['parent_id' => $id]);
         Council::create($request->all());
-        return redirect()->back();
+        return redirect()->back()->with(['success' => 'تم اضافة القسم بنجاح']);
     }
     public function beforeCreate()
     {   
         $councils = Council::whereNull('parent_id')
-        ->where('name','<>',3)
-        ->Where('id','<>',5) 
+        ->where('name','<>','المجلس البلدي')
+        ->Where('name','<>','مجالس النوادي') 
         ->pluck('name','id');
         return view('admin.sections.before-create',[
             'councils' => $councils,

@@ -46,8 +46,10 @@
                         </td>
                     </form>
                     </tr>
+                    
                 @endforeach
             </tbody>
         </table>
+        {{$reports->withQueryString()->links()}}
     @endif
 </x-main-layout>

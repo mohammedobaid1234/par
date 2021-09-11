@@ -16,7 +16,7 @@ class VideosController extends Controller
      */
     public function index()
     {
-        $videos = Video::get();
+        $videos = Video::orderBy('created_at','desc')->paginate(10);
         return view('admin.video.index' ,[
             'videos' => $videos,
             'title' => 'قسم مقاطع الفيديو'
@@ -113,7 +113,7 @@ class VideosController extends Controller
         }
         // dd($request);
         $video->update($request->all());
-        return redirect()->route('videos.index')->with(['success' => 'تم اضافة فيديو بنجاح']);
+        return redirect()->route('videos.index')->with(['success' => 'تم تعديل فيديو بنجاح']);
     }
 
     /**
@@ -125,6 +125,6 @@ class VideosController extends Controller
     public function destroy($id)
     {
         Video::where('id', '=', $id)->delete();
-        return redirect()->route('videos.index')->with(['success' => 'تم اضافة فيديو بنجاح']);
+        return redirect()->route('videos.index')->with(['success' => 'تم حذف فيديو بنجاح']);
     }
 }

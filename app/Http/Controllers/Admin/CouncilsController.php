@@ -16,7 +16,7 @@ class CouncilsController extends Controller
      */
     public function index()
     {
-        $councils = Council::whereNull('parent_id')->get();
+        $councils = Council::whereNull('parent_id')->orderBy('created_at','asc')->paginate(10);
         return view('admin.councils.index', [
             'councils' => $councils
         ]);
@@ -61,6 +61,9 @@ class CouncilsController extends Controller
        
         if($council->children->count() == 0){
             $users = $council->load('users');
+            // $users = $users[0]->users;
+            // return $users;
+            
             // return $users->users;
             return view('admin.users.index', [
                 'users' => $users->users,
@@ -120,7 +123,7 @@ class CouncilsController extends Controller
         ]);
         $council = Council::findOrFail($id);
         $council->update($request->all());
-        return redirect()->route('councils.index');
+        return redirect()->route('councils.index')->with(['success' => 'تم تعديل المجلس بنجاح']);
     }
 
     /**
@@ -133,6 +136,6 @@ class CouncilsController extends Controller
     {
         $council = Council::findOrFail($id);
         $council->delete();
-        return redirect()->back();
+        return redirect()->back()->with(['success' => 'تم حذف المجلس بنجاح']);
     }
 }

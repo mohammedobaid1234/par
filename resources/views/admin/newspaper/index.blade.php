@@ -47,5 +47,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{$newspapers->withQueryString()->links()}}
+
     @endif
 </x-main-layout>

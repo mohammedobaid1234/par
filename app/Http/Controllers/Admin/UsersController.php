@@ -21,7 +21,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::with('council')->get();
+        $users = User::with('council')->orderBy('created_at','asc')->paginate(10);
         return view('admin.users.index', [
             'users' => $users,
             'title' => 'كل الاعضاء'
@@ -40,6 +40,10 @@ class UsersController extends Controller
         $children = $council->load('children');
         
         return $children->children;
+        return view('admin.users.create',[
+            'children' =>$children->children->pluck('name','id'),
+            'title' => "اضافة عضو في " .$council->name 
+        ]);
         // $council = Council::findOrFail($id);
         // $children = $council->load('children');
         // $children = $children->children->pluck('name', 'id');

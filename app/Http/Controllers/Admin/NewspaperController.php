@@ -16,7 +16,7 @@ class NewspaperController extends Controller
      */
     public function index()
     {
-        $newspapers = Newspaper::get();
+        $newspapers = Newspaper::orderBy('created_at','desc')->paginate(10);
         return view('admin.newspaper.index' ,[
             'newspapers' => $newspapers,
             'title' => 'قسم الجريدة الكترونية'

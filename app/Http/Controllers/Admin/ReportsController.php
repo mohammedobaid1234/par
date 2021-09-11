@@ -16,7 +16,7 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $reports = Report::get();
+        $reports = Report::orderBy('created_at','desc')->paginate(10);
         return view('admin.report.index' ,[
             'reports' => $reports,
             'title' => 'قسم الأخبار'
@@ -57,7 +57,7 @@ class ReportsController extends Controller
         }
         // dd($request);
         Report::create($request->all());
-        return redirect()->route('reports.index')->with(['success' => 'تم اضافة العضو بنجاح']);
+        return redirect()->route('reports.index')->with(['success' => 'تم اضافة الخبر بنجاح']);
     }
 
     /**
@@ -113,7 +113,7 @@ class ReportsController extends Controller
         }
 
         $report->update($request->all());
-        return redirect()->route('reports.index')->with(['success' => 'تم اضافة الخبر بنجاح']);
+        return redirect()->route('reports.index')->with(['success' => 'تم تعديل الخبر بنجاح']);
     }
 
     /**
@@ -127,6 +127,6 @@ class ReportsController extends Controller
         $report = Report::findOrFail($id);
         Storage::disk('upload')->delete($report->image_url);
         Report::where('id', '=', $id)->delete();
-        return redirect()->route('reports.index')->with(['success' => 'تم اضافة العضو بنجاح']);
+        return redirect()->route('reports.index')->with(['success' => 'تم حذف الخبر بنجاح']);
     }
 }
