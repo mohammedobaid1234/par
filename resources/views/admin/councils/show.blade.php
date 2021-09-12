@@ -20,7 +20,7 @@
                     <td>
                         <a href='{{route('sections.edit', [$section->id])}}'><button type="button" class="btn btn-primary"><i class="far fa-edit" style="margin-right:5px"></i> تعديل</button></a>
                     </td>
-                    <form action="{{route('sections.destroy',[$section->id])}}" method="POST">
+                    <form class="delet-element" action="{{route('sections.destroy',[$section->id])}}" method="POST">
                         @method('delete')
                         @csrf
                         <td>

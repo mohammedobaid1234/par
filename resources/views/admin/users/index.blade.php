@@ -52,7 +52,7 @@
                         <a class="btn btn-sm btn-success" href="{{ route('users.edit', $user->id) }}">تعديل</a>
                     </td>
                     <td>
-                        <form  id="{{$user->id}}" class="delet-element" action="{{ route('users.destroy', $user->id) }}" method="POST">
+                        <form  class="delet-element" action="{{ route('users.destroy', $user->id) }}" method="POST">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-sm btn-danger dangerDelete"  >حذف</button>
