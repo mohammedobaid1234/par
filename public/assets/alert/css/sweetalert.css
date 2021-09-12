@@ -19,7 +19,7 @@ body.stop-scrolling {
 .sweet-alert {
   background-color: white;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  width: 478px;
+  width: 400px;
   padding: 17px;
   border-radius: 5px;
   text-align: center;
@@ -30,6 +30,7 @@ body.stop-scrolling {
   margin-top: -200px;
   overflow: hidden;
   display: none;
+  /* height: 300px; */
   z-index: 99999; }
   @media all and (max-width: 540px) {
     .sweet-alert {
