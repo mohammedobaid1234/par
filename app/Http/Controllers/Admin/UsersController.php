@@ -39,7 +39,7 @@ class UsersController extends Controller
         
         $children = $council->load('children');
         
-        return $children->children;
+        // return $children->children;
         return view('admin.users.create',[
             'children' =>$children->children->pluck('name','id'),
             'title' => "اضافة عضو في " .$council->name 
@@ -54,6 +54,15 @@ class UsersController extends Controller
         //     'type' => $council->type,
         //     'title' => "اضافة عضو في $name"
         // ]);
+        
+    }
+    public function children($id)
+    {
+        $council = Council::findOrFail($id);
+        
+        $children = $council->load('children');
+        
+        return $children->children;
         
     }
 

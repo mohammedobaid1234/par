@@ -11,6 +11,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="{{asset('assets/admin/plugins/fontawesome-free/css/all.min.css')}}">
   <link rel="stylesheet" href="{{asset('assets/admin/css/adminlre.min.css')}}">
+  <link href="{{asset('assets/alert/css/style.css')}}" type="text/css" rel="stylesheet">
+  <link href="{{asset('assets/alert/css/sweetalert.css')}}" type="text/css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="{{asset('assets/alert/js/sweetalert.min.js')}}" type="text/javascript"></script>
   <style>
     .shap {
       display: flex;
@@ -138,7 +142,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
-          <li style="margin-top:10px">
+          <li class="nav-item">
             <form method="POST" action="{{ route('logout') }}">
               @csrf
               
@@ -223,6 +227,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{asset('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('assets/admin/js/adminlte.min.js')}}"></script>
+<script src="{{asset('js/alert.js')}}"></script>
 <script src="{{asset('js/user-type.js')}}"></script>
+
 </body>
 </html>

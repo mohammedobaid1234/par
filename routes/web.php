@@ -41,6 +41,9 @@ Route::prefix('admin')
     Route::get('/users/before-create', [UsersController::class, 'beforeCreate'])->name('users.beforeCreate');
     Route::resource('/users', UsersController::class);
     Route::get('/users/create/{id}', [UsersController::class, 'create'])->name('users.create');
+    Route::get('/users/children/{id}', [UsersController::class, 'children'])->name('users.children');
+    
+    // Route::get('/users/new-create/{id}', [UsersController::class, 'sepesficCreate'])->name('users.create');
     
     Route::resource('/councils', CouncilsController::class);
     
