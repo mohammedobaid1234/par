@@ -1,4 +1,7 @@
 <x-main-layout :title="$title">
+    @if(Session::has('success'))
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
+    @endif
     <x-form-new-button label="اضافة أقسام" action='sections.create' :id="$link" />
 
     @if ($sections->count() == 0)

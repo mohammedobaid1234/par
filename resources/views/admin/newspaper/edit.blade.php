@@ -1,4 +1,7 @@
 <x-main-layout :title="$title">
+  @if(Session::has('success'))
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
+    @endif
     <form enctype="multipart/form-data" action="{{route('newspapers.update', [$newspaper->id])}}" method="POST" style="width:80%" >
         @csrf
       @method('put')

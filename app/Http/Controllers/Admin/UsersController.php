@@ -42,7 +42,8 @@ class UsersController extends Controller
         // return $children->children;
         return view('admin.users.create',[
             'children' =>$children->children->pluck('name','id'),
-            'title' => "اضافة عضو في " .$council->name 
+            'title' => "اضافة عضو في " .$council->name,
+            'type' => $id 
         ]);
         // $council = Council::findOrFail($id);
         // $children = $council->load('children');

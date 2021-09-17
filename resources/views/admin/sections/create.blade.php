@@ -1,4 +1,7 @@
 <x-main-layout title="اضافة عضو في {{$name}}">
+    @if(Session::has('success'))
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
+    @endif
     <div class="container-fluid">
         <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
             @csrf

@@ -117,7 +117,9 @@ class SectionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $section = Council::findOrFail($id);
+        $section->delete();
+        redirect()->back()->with(['success' => 'تم حذف القسم بنجاح']);
     }
 
     /**

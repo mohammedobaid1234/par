@@ -1,4 +1,7 @@
 <x-main-layout :title="$title">
+    @if(Session::has('success'))
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
+    @endif
     <div class="container-fluid">
         <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -13,6 +16,8 @@
                     @endforeach
                 </select>
             </div>
+            @else
+                <input type="text" hidden name="council_id" value="{{$type}}">
             @endif
             <div style="padding-top: 10px" class="form-group">
                 <x-form-input type='hidden' name='type' label='' value='عضو مجلس' />

@@ -24,6 +24,9 @@
 
 </x-main-layout> --}}
 <x-main-layout title="{{ $title }}">
+  @if(Session::has('success'))
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
+    @endif
     <div class="container-fluid" >
 
         <form style="padding-top:10px; width:60%;" action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">

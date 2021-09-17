@@ -1,5 +1,7 @@
 <x-main-layout title="اضافة مجلس">
-
+    @if(Session::has('success'))
+    <div class="alert alert-info">{{ Session::get('success') }}</div>
+    @endif
     <div class="container-fluid">
         <form action="{{ route('councils.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
