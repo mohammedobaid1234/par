@@ -1,28 +1,26 @@
-<x-main-layout title="{{$title}}">
+<x-main-layout title="{{$title}}" >
     <x-form-new-button label='اضافة عضو جديد' action='users.newCreate' />
 
     @if(Session::has('success'))
     <div class="alert alert-info">{{ Session::get('success') }}</div>
     @endif
-    <div class="container-fluid">
-        <table class="table">
-            <thead>
-                <tr>
+    <div class="container-fluid" >
+        <table class="table table-striped" style="width:90%; margin-bottom:0">
+            <thead style="color: #21457d">
+                <tr >
                     <th scope="col">الاسم</th>
                     <th scope="col">رقم الجوال</th>
                     <th scope="col">حول</th>
                     <th scope="col">الصورة</th>
-                    <th scope="col"> الاسم كامل</th>
-                    <th scope="col">تاريخ الميلاد</th>
-                    <th scope="col">الحالة الاجتماعية</th>
-                    <th scope="col">النوع</th>
+                  
                     <th scope="col">الدائرة</th>
                     <th scope="col">
+                        تاريخ الانشاء
+                    </th>
+                    <th scope="col" style="text-align: center">
                         التعديل
                     </th>
-                    <th scope="col">
-                        الحذف
-                    </th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -31,33 +29,40 @@
                     <th scope="row">{{ $user->name }}</th>
                     <td>{{ $user->phone_number }}</td>
                     <td>{{ $user->about }}</td>
-                    <td><img width="50" height="50" style="border-radius: 10px;" src="{{ $user->image_path }}" alt=""></td>
-                    <th>{{ $user->full_name }}</th>
-                    <td>{{ $user->birthday }}</td>
-                    <td>{{ $user->marital_status }}</td>
-                    <td>{{ $user->type }}</td>
+                    <td><img width="60" style="border-radius: 6px"  src="{{ $user->image_path }}" alt=""></td>
+            
                     @if ($user->type == "عضو مجلس")    
-                    <td>
-                      
+                    <td id='type' style="width: 25%">
                         @if ($user->council->parent == null)
                            {{ $user->council->name }}
                         @else
-                        {{ $user->council->parent->name }}[{{$user->council->name}}]
+                        {{ $user->council->parent->name }} 
+                        [{{$user->council->name}}]
                         @endif
                     </td>
                     @else
-                    <td></td>
+                    <td>{{$user->type}}</td>
                     @endif
-                    <td>
-                        <a class="btn btn-sm btn-success" href="{{ route('users.edit', $user->id) }}">تعديل</a>
+                    <td>{{$user->created_at}}</td>
+                       <td>
+                        <a class="btn btn-sm btn-primary" href='{{route('users.edit', [$user->id])}}'>
+                         <div style="width: 60px" class="d-flex justify-content-between align-items-center">                        
+                        <i class="far fa-edit" style="margin-right:5px"></i> <span>تعديل</span>
+                        </div>
+                        </a>
                     </td>
-                    <td>
-                        <form  class="delet-element" action="{{ route('users.destroy', $user->id) }}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button type="submit" class="btn btn-sm btn-danger dangerDelete"  >حذف</button>
-                        </form>
-                    </td>
+                    <form class="delet-element" action="{{route('users.destroy',[$user->id])}}" method="POST">
+                        @method('delete')
+                        @csrf
+                        <td>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                             <div style="width: 55px" class="d-flex justify-content-between align-items-center">                        
+                             <i class="far fa-trash-alt" style="margin-right:5px"></i> <span>حذف</span>
+                             </div>
+                             </button>
+
+                        </td>
+                    </form>
                 </tr>
                 @endforeach
 

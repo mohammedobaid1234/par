@@ -20,6 +20,11 @@ class Council extends Model
         'slug',
         'parent_id',
     ];
+    protected $hidden =[
+        'created_at',
+        'updated_at',
+        'type'
+    ];
 
     /**
      * Reverse the migrations.

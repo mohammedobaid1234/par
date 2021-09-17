@@ -1,7 +1,7 @@
 <x-main-layout :title="$title">
   
-        <div class="container-fluid">
-            <div class="row">
+        <div class="container-fluid ">
+            <div class="row" style="padding-top: 20px">
               <div class="col-lg-6">
                 <div class="card">
                   <div class="card-header">

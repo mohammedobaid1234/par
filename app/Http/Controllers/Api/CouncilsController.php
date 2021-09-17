@@ -16,7 +16,7 @@ class CouncilsController extends Controller
      */
     public function index()
     {
-        return Council::whereNull('parent_id')->get(['name']);
+        return Council::whereNull('parent_id')->get(['name','id']);
     }
 
     /**
@@ -38,12 +38,27 @@ class CouncilsController extends Controller
      */
     public function show($id)
     {
-        $Parent_council = Council::findOrFail($id);
-        if($Parent_council->id == 1){
-           $councils = $Parent_council->load('children:name,parent_id');
-           return $councils->children;
+        $parent_council = Council::with('users','children')->findOrFail($id);
+        
+        if($parent_council->children->count() > 0 ){
+          
+           $councils = $parent_council->load('children:id,name,parent_id');
+           return $parent_council->children;
         }
-        return $Parent_council->children->load('users');
+        $council = $parent_council->load('children.users');
+        $users = collect([]);
+        $users1 = $council->users;
+        foreach($users1 as $child){
+            $id = $child->id;
+            $name = $child->name;
+            $array = [
+                'id' => $id,
+                'name' => $name
+            ];
+           
+            $users->push($array);  
+        }
+        return $users;
     
     }
 

@@ -4,12 +4,14 @@
     @if ($sections->count() == 0)
                 <div class="alert alert-danger">عذرا لا يوجد  أقسام</div>
     @else
-        <table class="table table-striped">
+        <table class="table table-striped" style="margin-bottom: 0; width:94%">
             <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">أقسام</th>
-                <th scope="col"></th>       
+                <td>تاريخ الانشاء</td>
+                <th scope="col"></th>   
+                <th></th>    
             </tr>
             </thead>
             <tbody>
@@ -17,16 +19,19 @@
                     <tr>
                     <th scope="row">{{$loop->first? 'الأول' : ($loop->last? 'الأخير' : $loop->iteration)}}</th>
                     <td><a href="{{route('council.checkChildren', $section->id)}}">{{$section->name}}</a></td>
-                    <td>
-                        <a href='{{route('sections.edit', [$section->id])}}'><button type="button" class="btn btn-primary"><i class="far fa-edit" style="margin-right:5px"></i> تعديل</button></a>
+                    <td>{{$section->created_at}}</td>
+                    <td class="option">
+                            <a class="btn btn-sm btn-primary" href='{{route('sections.edit', [$section->id])}}'><i class="far fa-edit" ></i> تعديل</a>
                     </td>
-                    <form class="delet-element" action="{{route('sections.destroy',[$section->id])}}" method="POST">
-                        @method('delete')
-                        @csrf
-                        <td>
-                            <button type="submit" class="btn btn-dark"> <i class="far fa-trash-alt" style="margin-right:5px"></i> حذف</button>
-                        </td>
-                    </form>
+                    
+                            <form class="delet-element" action="{{route('sections.destroy',[$section->id])}}" method="POST">
+                                @method('delete')
+                                @csrf
+                                <td>
+                                    <button type="submit" class="btn btn-sm btn-danger"> <i class="far fa-trash-alt" ></i> حذف</button>
+                                </td>
+                            </form>
+                    
                     </tr>
                 @endforeach
             </tbody>

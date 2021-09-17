@@ -28,7 +28,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 Route::prefix('admin')
-->middleware(['auth','check:أدمن'])
+// ->middleware(['auth','check:أدمن'])
 ->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home.index');
     Route::resource('/reports', ReportsController::class);

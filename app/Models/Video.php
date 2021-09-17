@@ -22,7 +22,7 @@ class Video extends Model
         'image_url',
     ];
     protected $appends =['image_path'];
-    protected $hidden = ['image_url'];
+    protected $hidden = ['image_url', 'created_at', 'updated_at', 'slug'];
     public function getImagePathAttribute($value)
     {
         if(!$this->image_url){

@@ -20,6 +20,8 @@ class Newspaper extends Model
         'newspaper_url',
         'image_url',
     ];
+    protected $hidden = ['image_url', 'created_at', 'updated_at', 'slug'];
+    protected $appends = ['image_path'];
     protected static function booted()
     {
         static::creating(function(Newspaper $newspaper) {
@@ -34,8 +36,9 @@ class Newspaper extends Model
     }
     public function getImagePathAttribute($value)
     {
+      
         if(!$this->image_url){
-            return asset('images/placeholder.png');
+            // return asset('images/placeholder.png');
         }
         if(stripos($this->image_url , 'http') ===  0){
             return $this->image_url;

@@ -40,6 +40,6 @@
         <div class="form-group" id="password-admin" style="display: none">
             <x-form-input name='password' type='password' label='كلمة المرور' />
         </div>
-        <button type="submit" class="btn btn-primary" style="margin: 10px">اضافة</button>
+        <button type="submit" class="btn" style="background: #1e2f48;color:#fff; margin: 10px">اضافة</button>
     </form>
 </x-main-layout>

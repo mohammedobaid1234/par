@@ -14,11 +14,13 @@ class TweetsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        dd( $request->header('User-Agent'));
         $tweets = Tweet::with('user:id,name,type')->paginate(3);
         return new JsonResponse($tweets);
     }
+    // PostmanRuntime/7.28.4
 
     /**
      * Store a newly created resource in storage.
@@ -67,7 +69,7 @@ class TweetsController extends Controller
     {
         $tweet = Tweet::findOrFail($id);
         $request->validate([
-            'body' => 'sometimes|required',
+            'body' => 'sometimes|required|unique',
             'user_id' => 'nullable|exists:users,id',
             'image' => 'nullable'
         ]);

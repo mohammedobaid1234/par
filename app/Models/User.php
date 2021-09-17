@@ -42,7 +42,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'image_url'
+        'image_url',
+        'created_at',
+        'updated_at',
+        
     ];
 
     /**
@@ -99,7 +102,7 @@ class User extends Authenticatable
     public function getImagePathAttribute($value)
     {
         if(!$this->image_url){
-            return asset('images/placeholder.png');
+            return asset('uploads/palceholder.jpg');
         }
         if(stripos($this->image_url , 'http') ===  0){
             return $this->image_url;

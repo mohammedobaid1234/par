@@ -7,11 +7,13 @@
     @if ($videos->count() == 0)
                 <div class="alert alert-danger">عذرا لا يوجد مقاطع فيديو</div>
     @else
-        <table class="table table-striped">
+        <table class="table table-striped" style="width:90%">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">الأخبار</th>
+                <th scope="col">الصورة</th>
+                <th scope="col">العنوان</th>
+                <th scope="col">الرابط</th>
                 <th scope="col"></th>
                 
             </tr>
@@ -19,29 +21,30 @@
             <tbody>
                 @foreach ($videos as $video)       
                     <tr>
-                    <th scope="row">{{$loop->first? 'الأول' : ($loop->last? 'الأخير' : $loop->iteration)}}</th>
-                    <td style="width: 80%">
-                        <div class="shap">
-                            <div >
-                                <img style="width:200px; heigh:200px" src="{{$video->image_path}}" alt="صورة" >
-                                قبل  {{$video->created_at->diffForHumans()}} 
-                            </div>
-                            <div>
-                                <h6>{{$video->title}} </h6>
-                                <p>
-                                    <a href="http://{{$video->video_url}}">{{$video->video_url}} </a>
-                                </p>
-                            </div>
-                        </div>
+                    <th scope="row">{{$loop->iteration}}</th>
+                    <td scope="row">
+                        <img width="100px" src="{{$video->image_path}}" alt="..." />
+
                     </td>
+                    <td scope="row">{{$video->title}}</td>
+                    <td scope="row">{{$video->video_url}}</td>
                     <td>
-                        <a href='{{route('videos.edit', [$video->id])}}'><button type="button" class="btn btn-primary"><i class="far fa-edit" style="margin-right:5px"></i> تعديل</button></a>
+                        <a class="btn btn-sm btn-primary" href='{{route('videos.edit', [$video->id])}}'>
+                         <div style="width: 60px" class="d-flex justify-content-between align-items-center">                        
+                        <i class="far fa-edit" style="margin-right:5px"></i> <span>تعديل</span>
+                        </div>
+                        </a>
                     </td>
                     <form class="delet-element" action="{{route('videos.destroy',[$video->id])}}" method="POST">
                         @method('delete')
                         @csrf
                         <td>
-                            <button type="submit" class="btn btn-dark"> <i class="far fa-trash-alt" style="margin-right:5px"></i> حذف</button>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                             <div style="width: 55px" class="d-flex justify-content-between align-items-center">                        
+                             <i class="far fa-trash-alt" style="margin-right:5px"></i> <span>حذف</span>
+                             </div>
+                             </button>
+
                         </td>
                     </form>
                     </tr>

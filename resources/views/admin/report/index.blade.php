@@ -8,43 +8,45 @@
     @if ($reports->count() == 0)
                 <div class="alert alert-danger">عذرا لا يوجد أخبار</div>
     @else
-        <table class="table table-striped">
+        <table class="table table-striped" style="width:90%">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">الأخبار</th>
+                <th scope="col">الصورة</th>
+                <th scope="col" class="report">العنوان</th>
+                <th scope="col" class="report">المحتوى</th>
+                <th scope="col">تاريخ الاضافة</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
                 
             </tr>
             </thead>
             <tbody>
                 @foreach ($reports as $report)       
-                    <tr>
-                    <th scope="row">{{$loop->first? 'الأول' : ($loop->last? 'الأخير' : $loop->iteration)}}</th>
-                    <td style="width: 80%">
-                        <div class="shap">
-                            <div >
-                                <img style="width:200px; heigh:200px" src="{{$report->image_path}}" alt="صورة" >
-                                قبل  {{$report->created_at->diffForHumans()}} 
-                            </div>
-                            <div>
-                                <h6>{{$report->title}} </h6>
-                                <p>
-                                    {{$report->body}} 
-                                </p>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <a href='{{route('reports.edit', [$report->id])}}'><button type="button" class="btn btn-primary"><i class="far fa-edit" style="margin-right:5px"></i> تعديل</button></a>
-                    </td>
-                    <form class="delet-element" action="{{route('reports.destroy',[$report->id])}}" method="POST">
-                        @method('delete')
-                        @csrf
-                        <td>
-                            <button type="submit" class="btn btn-dark"> <i class="far fa-trash-alt" style="margin-right:5px"></i> حذف</button>
+                    <tr>   
+                        <th > {{$loop->iteration}}</th>
+                        <td >
+                           <img width="100px" src="{{$report->image_path}}" alt="...">
                         </td>
-                    </form>
+                        <td class="report">{{$report->title}}</td>
+                        <td class="report">{{$report->body}}</td>
+                        <td>{{$report->created_at}}</td>
+                        <td class="option">
+                            <a  class="btn btn-sm btn-primary" href='{{route('reports.edit', [$report->id])}}'>
+                                <div style="width: 60px" class="d-flex justify-content-between align-items-center">
+                                    <i class="far fa-edit" style="margin-right:5px"></i> 
+                                    <span>تعديل</span>
+                                </div>   
+                            </a>
+                        </td>
+                        <form class="delet-element" action="{{route('reports.destroy',[$report->id])}}" method="POST">
+                            @method('delete')
+                            @csrf
+                            <td>
+                                <button type="submit" class="btn btn-sm btn-danger"><div style="width: 55px" class="d-flex justify-content-between align-items-center"> <i class="far fa-trash-alt" style="margin-right:5px"></i> <span>حذف</span></div></button>
+                            </td>
+                        </form>
+                    
                     </tr>
                     
                 @endforeach

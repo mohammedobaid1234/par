@@ -6,11 +6,13 @@
     @if ($newspapers->count() == 0)
                 <div class="alert alert-danger">عذرا لا يوجد جردائد</div>
     @else
-        <table class="table table-striped">
+        <table class="table table-striped" style="width:90%">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">مقال</th>
+                <th scope="col">الصورة</th>
+                <th scope="col">العنوان</th>
+                <th scope="col">الرابط</th>
                 <th scope="col"></th>
                 
             </tr>
@@ -18,29 +20,30 @@
             <tbody>
                 @foreach ($newspapers as $newspaper)       
                     <tr>
-                    <th scope="row">{{$loop->first? 'الأول' : ($loop->last? 'الأخير' : $loop->iteration)}}</th>
-                    <td style="width: 80%">
-                        <div class="shap">
-                            <div >
-                                <img style="width:200px; heigh:200px" src="{{$newspaper->image_path}}" alt="صورة" >
-                                قبل  {{$newspaper->created_at->diffForHumans()}} 
-                            </div>
-                            <div>
-                                <h6>{{$newspaper->title}} </h6>
-                                <p>
-                                    <a href="http://{{$newspaper->article_url}}">{{$newspaper->article_url}} </a>
-                                </p>
-                            </div>
-                        </div>
+                    <th scope="row">{{$loop->iteration}}</th>
+                    <td scope="row">
+                        <img width="100px" src="{{$newspaper->image_path}}" alt="..." />
                     </td>
+                    <td scope="row">{{$newspaper->title}}</td>
+                    <td scope="row">{{$newspaper->newspaper_url}}</td>
                     <td>
-                        <a href='{{route('newspapers.edit', [$newspaper->id])}}'><button type="button" class="btn btn-primary"><i class="far fa-edit" style="margin-right:5px"></i> تعديل</button></a>
+                        <a class="btn btn-sm btn-primary" href='{{route('newspapers.edit', [$newspaper->id])}}'>
+                           <div style="width: 60px" class="d-flex justify-content-between align-items-center">                        
+                                <i class="far fa-edit" style="margin-right:5px"></i>
+                                <span> تعديل </span>
+                            </div>
+                        </a>
                     </td>
                     <form class="delet-element" action="{{route('newspapers.destroy',[$newspaper->id])}}" method="POST">
                         @method('delete')
                         @csrf
                         <td>
-                            <button type="submit" class="btn btn-dark"> <i class="far fa-trash-alt" style="margin-right:5px"></i> حذف</button>
+                            <button type="submit" class="btn btn-sm btn-dark"> 
+                                <div style="width: 55px" class="d-flex justify-content-between align-items-center">                        
+                                    <i class="far fa-trash-alt" style="margin-right:5px"></i>
+                                    <span>حذف</span>
+                                </div>
+                            </button>
                         </td>
                     </form>
                     </tr>

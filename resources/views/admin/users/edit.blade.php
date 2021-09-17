@@ -24,15 +24,15 @@
 
 </x-main-layout> --}}
 <x-main-layout title="{{ $title }}">
-    <div class="container" style="">
+    <div class="container-fluid" >
 
-        <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+        <form style="padding-top:10px; width:60%;" action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('put')
-              <img src="{{old('image', $user->phone_number ?? null)}}" style="width: 100px; height: 100px">
+              <img class="mb-4" src="{{old('image', $user->image_path)}}" style="width: 150px; border-radius:6px">
             <x-form-input name='name' label='اسم العضو' :value="$user->name"/>
             <x-form-input name='phone_number' label='رقم الجوال' :value="$user->phone_number"/>
-            <label for="" style="padding-right: 10px">أختر نوع العضو</label>
+            <label for="" style="padding-right: 10px; margin:10px 0 0">أختر نوع العضو</label>
               <div class="form-check" style="margin: 10px">
                 <input class="form-check-input" type="radio" name="type"  id="type1" value="عضو مجلس">
                 <label class="form-check-label" for="type1">
@@ -69,7 +69,7 @@
             <div class="form-group" id="password-admin" style="display: none">
                 <x-form-input name='password' type='password' label='كلمة المرور' />
             </div>
-            <button type="submit" class="btn btn-primary" style="margin: 10px">تعديل</button>
+            <button type="submit" class="btn " style="background: #1e2f48;color:#fff; margin: 10px">تعديل</button>
         </form>
     </div>
 </x-main-layout>

@@ -15,7 +15,7 @@ class VideosController extends Controller
      */
     public function index()
     {
-        return Video::first(['id','title', 'video_url', 'image_url',]);
+        return Video::paginate(3);
 
         
     }
@@ -39,10 +39,14 @@ class VideosController extends Controller
      */
     public function show($id)
     {
-        return Video::where('id',$id)->first(['id','title', 'video_url', 'image_url',])->paginate(3);;
+        return Video::where('id',$id)->first(['id','title', 'video_url', 'image_url',]);
         
     }
 
+    public function videoToday()
+    {
+        return Video::latest()->first();
+    }
     /**
      * Update the specified resource in storage.
      *

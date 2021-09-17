@@ -1,7 +1,7 @@
 $('#select3').on('change', function() {
     const id = this.value;
-   
-    $.get("http://parlmanat1.herokuapp.com/admin/users/children/" +id, function(data){
+    
+    $.get("http://localhost:8000/admin/users/children/" +id, function(data){
         console.log(data.length);
         if(data.length == 0){
             $('#select-main1').css('display' , 'none')

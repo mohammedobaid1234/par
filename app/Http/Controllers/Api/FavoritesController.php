@@ -34,7 +34,7 @@ class FavoritesController extends Controller
         ]);
         
         $favorite_report = Favorite::create($request->all());
-        return new JsonResponse($favorite_report, 201);
+        return new JsonResponse('added successfully', 201);
         
     }
 

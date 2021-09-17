@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Newspaper;
-use App\Models\Report;
 use Illuminate\Http\Request;
 
-class ReportsController extends Controller
+class NewspapersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,11 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        return Report::select(['title','body'])->paginate(3);
+        return Newspaper::paginate(3);
+
+        
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -38,8 +39,12 @@ class ReportsController extends Controller
      */
     public function show($id)
     {
-        return Report::where('id',$id)->first(['title','body']);
-         
+        return Newspaper::where('id',$id)->first(['id','title', 'newspaper_url']);   
+    }
+
+    public function newspaperToday()
+    {
+        return Newspaper::latest()->first();
     }
 
     /**
@@ -51,8 +56,8 @@ class ReportsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-    }   
+        //
+    }
 
     /**
      * Remove the specified resource from storage.

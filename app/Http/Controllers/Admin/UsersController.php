@@ -184,6 +184,9 @@ class UsersController extends Controller
            ]);
        }
         $password = Hash::make($request->password);
+        $request->merge([
+            'password' => $password
+        ]);
         $user->update($request->all());
         return redirect(route('users.index'))->with(['success' => 'تم تعديل بيانات العضو بنجاح'])->with(['success' => 'تم اضافة العضو بنجاح']);
     }

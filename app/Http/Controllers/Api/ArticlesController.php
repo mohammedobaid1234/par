@@ -15,7 +15,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        return Article::first(['id','title', 'article_url', 'image_url',])->paginate(3);
+        return Article::paginate(3);
 
     }
 
@@ -41,6 +41,10 @@ class ArticlesController extends Controller
         return Article::where('id',$id)->first(['id','title', 'article_url', 'image_url',]);
     }
 
+    public function articleToday()
+    {
+        return Article::latest()->first();
+    }
     /**
      * Update the specified resource in storage.
      *

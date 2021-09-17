@@ -6,11 +6,14 @@
     @if ($articles->count() == 0)
                 <div class="alert alert-danger">عذرا لا يوجد مقالات</div>
     @else
-        <table class="table table-striped">
+        <table class="table table-striped" style="width:90%">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">مقال</th>
+                <th scope="col">صورة</th>
+                <th scope="col" >العنوان</th>
+                <th scope="col" >الرابط</th>
+                <th></th>
                 <th scope="col"></th>
                 
             </tr>
@@ -18,29 +21,29 @@
             <tbody>
                 @foreach ($articles as $article)       
                     <tr>
-                    <th scope="row">{{$loop->first? 'الأول' : ($loop->last? 'الأخير' : $loop->iteration)}}</th>
-                    <td style="width: 80%">
-                        <div class="shap">
-                            <div >
-                                <img style="width:200px; heigh:200px" src="{{$article->image_path}}" alt="صورة" >
-                                قبل  {{$article->created_at->diffForHumans()}} 
-                            </div>
-                            <div>
-                                <h6>{{$article->title}} </h6>
-                                <p>
-                                    <a href="http://{{$article->article_url}}">{{$article->article_url}} </a>
-                                </p>
-                            </div>
-                        </div>
-                    </td>
+                    <th scope="row">{{$loop->iteration}}</th>
+                    <th scope="row">
+                        <img width="100px" src="{{$article->image_path}}" alt="..." />
+                    </th>
+                    <th scope="row" >{{$article->title}}</th>
+                    <th scope="row" >{{$article->article_url}}</th>
+                    
                     <td>
-                        <a href='{{route('articles.edit', [$article->id])}}'><button type="button" class="btn btn-primary"><i class="far fa-edit" style="margin-right:5px"></i> تعديل</button></a>
+                        <a class="btn btn-sm btn-primary" href='{{route('articles.edit', [$article->id])}}'>
+                            <div style="width: 60px" class="d-flex justify-content-between align-items-center">                        
+                               <i class="far fa-edit" ></i> <span>تعديل</span>
+                            </div>
+                        </a>
                     </td>
                     <form class="delet-element" action="{{route('articles.destroy',[$article->id])}}" method="POST">
                         @method('delete')
                         @csrf
                         <td>
-                            <button type="submit" class="btn btn-dark"> <i class="far fa-trash-alt" style="margin-right:5px"></i> حذف</button>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <div style="width: 55px" class="d-flex justify-content-between align-items-center">                        
+                                   <i class="far fa-trash-alt" ></i> <Span>حذف</span>
+                                </div>
+                             </button>
                         </td>
                     </form>
                     </tr>
