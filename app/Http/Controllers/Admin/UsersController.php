@@ -95,7 +95,7 @@ class UsersController extends Controller
         $user = User::create(
             $request->all()
         );
-        return redirect(route('users.index'))->with(['success' => 'تم اضافة العضو بنجاح']);
+        return redirect()->back()->with(['success' => 'تم اضافة العضو بنجاح']);
     }
     public function newStore(Request $request)
     {
