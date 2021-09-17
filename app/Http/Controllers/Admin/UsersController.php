@@ -87,7 +87,7 @@ class UsersController extends Controller
 
         $request->validate([
             'name' => 'required',
-            'phone_number' => 'required',
+            'phone_number' => 'required,unique:users,phone_number',
             'council_id' => 'required'
             
         ]);
