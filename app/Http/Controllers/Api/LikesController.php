@@ -26,14 +26,14 @@ class LikesController extends Controller
             $tweet->update([
                 'likes' => $tweet->likes - 1
             ]);
-            return ['success' => 'deleted'];
+            return ['success' => 'تم الحذف'];
         } else {
             Like::create($request->all());
             $tweet = Tweet::where('id', $request->tweet_id)->firstOrFail();
             $tweet->update([
                 'likes' => $tweet->likes + 1
             ]);
-            return ['success' => 'created'];
+            return ['success' => 'تم الاضافة'];
         }
     }
 }

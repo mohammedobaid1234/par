@@ -20,6 +20,7 @@ class CommentsController extends Controller
         ]);
         if ($request->hasFile('image')) {
             $uploadedFile = $request->file('image');
+            
             $image_url = $uploadedFile->store('/', 'upload');
             $request->merge([
                 'image_url' => $image_url
@@ -31,7 +32,8 @@ class CommentsController extends Controller
             'comments' => $tweet->comments + 1
         ]);
         return new JsonResponse([
-            'success' => 'the comment is addedd'
+            'success' => 'هذا التعليق تمت اضافته',
+            'comment' => $comment->load('user'),
         ], 201);
     }
 }

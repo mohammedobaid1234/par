@@ -9,6 +9,9 @@ use App\Http\Controllers\Api\NewspapersController;
 use App\Http\Controllers\Api\TweetsController;
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\VideosController;
+use App\Http\Controllers\Api\CommentsController;
+use App\Http\Controllers\Api\LikesController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +30,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('auth/tokens', [AccessTokenController::class , 'store']);
 Route::post('auth/check', [AccessTokenController::class, 'checkUser']);
+Route::post('auth/tokens', [AccessTokenController::class , 'store']);
 Route::delete('auth/tokens', [AccessTokenController::class, 'destroy'])
     ->middleware('auth:sanctum');
 
@@ -49,3 +52,6 @@ Route::apiResource('newspapers',NewspapersController::class);
 
 Route::apiResource('users',UsersController::class);
 Route::apiResource('favorites',FavoritesController::class);
+Route::apiResource('comments',CommentsController::class);
+Route::apiResource('likes',LikesController::class);
+

@@ -38,8 +38,12 @@ class CouncilsController extends Controller
      */
     public function show($id)
     {
-        $parent_council = Council::with('users','children')->findOrFail($id);
-        
+        $parent_council = Council::with('users','children')->find($id);
+        if(!$parent_council){
+            return response()->json([
+                'message' => 'هذا المجلس غير موجود'
+            ],401);
+        }
         if($parent_council->children->count() > 0 ){
           
            $councils = $parent_council->load('children:id,name,parent_id');

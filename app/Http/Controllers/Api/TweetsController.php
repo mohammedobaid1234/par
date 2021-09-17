@@ -16,8 +16,8 @@ class TweetsController extends Controller
      */
     public function index(Request $request)
     {
-        dd( $request->header('User-Agent'));
-        $tweets = Tweet::with('user:id,name,type')->paginate(3);
+        // dd( $request->header('User-Agent'));
+        $tweets = Tweet::with('user:id,name,type','comments')->paginate(3);
         return new JsonResponse($tweets);
     }
     // PostmanRuntime/7.28.4
@@ -45,7 +45,7 @@ class TweetsController extends Controller
         $tweet = Tweet::create($request->all());
         return new JsonResponse($tweet->load('user:name,id'), 201);
     }
-
+    
     /**
      * Display the specified resource.
      *
@@ -54,7 +54,12 @@ class TweetsController extends Controller
      */
     public function show($id)
     {
-        $tweet = Tweet::with('user')->findOrFail($id);
+        $tweet = Tweet::with(['user','comments'])->find($id);
+        if(!$tweet){
+            return response()->json([
+                'message' => 'هذه التويتة غير موجودة'
+            ], 401);
+        }
         return new JsonResponse($tweet);
     }
 
@@ -69,12 +74,15 @@ class TweetsController extends Controller
     {
         $tweet = Tweet::findOrFail($id);
         $request->validate([
-            'body' => 'sometimes|required|unique',
-            'user_id' => 'nullable|exists:users,id',
+            'body' => 'sometimes|required|unique:tweets,body,'.$id,
+            // 'user_id' => 'nullable|exists:users,id',
             'image' => 'nullable'
         ]);
         if ($request->hasFile('image')) {
-            unlink(public_path('uploads/' . $tweet->image_url));
+            if($tweet->image_url !== null ){
+
+                unlink(public_path('uploads/' . $tweet->image_url));
+            }
             $uploadedFile = $request->file('image');
             $image_url = $uploadedFile->store('/', 'upload');
             $request->merge([
@@ -98,7 +106,7 @@ class TweetsController extends Controller
         $tweet = Tweet::findOrFail($id);
         $tweet->delete();
         return new JsonResponse([
-            'message' => 'the tweet is deleted'
+            'message' => 'تم حذف التويتة'
         ]);
     }
 }

@@ -38,7 +38,12 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if(!$user){
+            return response()->json([
+                'message' => 'هذا العضو غير موجود'
+            ],401);
+        }
         $user =  $user->load('tweets');
         return $user;
 
@@ -62,7 +67,10 @@ class UsersController extends Controller
         ]);
 
         if($request->hasFile('image')){
-            unlink(public_path('uploads/' . $user->image_url));
+            if($user->image_url !== null){
+
+                unlink(public_path('uploads/' . $user->image_url));
+            }
             $uploadedFile = $request->file('image');
             $image_url = $uploadedFile->store('/','upload');
             $request->merge([

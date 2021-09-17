@@ -39,7 +39,13 @@ class NewspapersController extends Controller
      */
     public function show($id)
     {
-        return Newspaper::where('id',$id)->first(['id','title', 'newspaper_url']);   
+        $news =  Newspaper::where('id',$id)->first(['id','title', 'newspaper_url']); 
+        if(!$news){
+            return response()->json([
+                'message' => 'هذا الجريدة غير موجودة'
+            ],401);
+        }  
+        return $news;
     }
 
     public function newspaperToday()

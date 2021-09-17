@@ -38,7 +38,13 @@ class ReportsController extends Controller
      */
     public function show($id)
     {
-        return Report::where('id',$id)->first(['title','body']);
+        $report =  Report::where('id',$id)->first(['title','body']);
+        if(!$report){
+            return response()->json([
+                'message' => 'هذا الخبر غير موجود'
+            ],401);
+        }
+        return $report;
          
     }
 

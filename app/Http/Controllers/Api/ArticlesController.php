@@ -38,7 +38,13 @@ class ArticlesController extends Controller
      */
     public function show($id)
     {
-        return Article::where('id',$id)->first(['id','title', 'article_url', 'image_url',]);
+        $article =  Article::where('id',$id)->first(['id','title', 'article_url', 'image_url',]);
+        if(!$article){
+            return response()->json([
+                'message' => 'هذا المقال غير موجود'
+            ],401);
+        }
+        return $article;
     }
 
     public function articleToday()

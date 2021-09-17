@@ -39,7 +39,13 @@ class VideosController extends Controller
      */
     public function show($id)
     {
-        return Video::where('id',$id)->first(['id','title', 'video_url', 'image_url',]);
+        $video = Video::where('id',$id)->first(['id','title', 'video_url', 'image_url',]);
+        if(!$video){
+            return response()->json([
+                'message' => 'هذا الفيديو غير موجود'
+            ],401);
+        }
+        return $video;
         
     }
 

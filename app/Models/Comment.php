@@ -19,6 +19,7 @@ class Comment extends Model
         'slug',
         'image_url',
         'user_id',
+        'tweet_id'
     ];
 
     public function user()
