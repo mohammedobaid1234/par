@@ -24,7 +24,7 @@ class TweetsController extends Controller
     public function index(Request $request)
     {
         // dd( $request->header('User-Agent'));
-        $tweets = Tweet::with('user:id,name,type','tweetComments')->paginate(3);
+        $tweets = Tweet::with('user:id,name,type','tweetComments.user')->paginate(3);
         return new JsonResponse($tweets);
     }
     // PostmanRuntime/7.28.4
@@ -69,7 +69,7 @@ class TweetsController extends Controller
      */
     public function show($id)
     {
-        $tweet = Tweet::with(['user','tweetComments'])->find($id);
+        $tweet = Tweet::with(['user','tweetComments.user'])->find($id);
         if(!$tweet){
             return response()->json([
                 'message' => 'هذه التويتة غير موجودة'
