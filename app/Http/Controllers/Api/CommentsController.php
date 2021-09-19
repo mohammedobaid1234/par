@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Tweet;
+use App\Models\User;
+use App\Notifications\CommentCreatedNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class CommentsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['show', 'index']);
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -31,6 +37,8 @@ class CommentsController extends Controller
         $tweet->update([
             'comments' => $tweet->comments + 1
         ]);
+        $user = User::findOrFail($request->post('user_id'));
+        $user->notify(new CommentCreatedNotification($comment));
         return new JsonResponse([
             'success' => 'هذا التعليق تمت اضافته',
             'comment' => $comment->load('user'),
