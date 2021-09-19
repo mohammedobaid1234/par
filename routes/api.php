@@ -55,3 +55,4 @@ Route::apiResource('favorites',FavoritesController::class);
 Route::apiResource('comments',CommentsController::class);
 Route::apiResource('likes',LikesController::class);
 
+Route::get('notifications/{id}', [NotificationsController::class, 'index']);

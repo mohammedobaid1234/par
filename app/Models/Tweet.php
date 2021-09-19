@@ -55,9 +55,9 @@ class Tweet extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function comments()
+    public function tweetComments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'tweet_id', 'id');
     }
     public function likes()
     {

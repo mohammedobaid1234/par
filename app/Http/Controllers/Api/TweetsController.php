@@ -4,11 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tweet;
+use App\Models\User;
+use App\Notifications\TweetCreatedNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class TweetsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['show', 'index']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +24,7 @@ class TweetsController extends Controller
     public function index(Request $request)
     {
         // dd( $request->header('User-Agent'));
-        $tweets = Tweet::with('user:id,name,type','comments')->paginate(3);
+        $tweets = Tweet::with('user:id,name,type','tweetComments')->paginate(3);
         return new JsonResponse($tweets);
     }
     // PostmanRuntime/7.28.4
@@ -30,6 +37,12 @@ class TweetsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::where('id', $request->post('user_id'))->firstOrFail();
+        if($user->type == 'عضو فعال') {
+            return new JsonResponse([
+                'message' => 'هذه العملية غير مسموحة'
+            ], 403);
+        }
         $request->validate([
             'body' => 'required',
             'user_id' => 'required|exists:users,id',
@@ -43,6 +56,8 @@ class TweetsController extends Controller
             ]);
         }
         $tweet = Tweet::create($request->all());
+        $users = User::where('id', '<>', $tweet->user_id)->get();
+        Notification::send($users, new TweetCreatedNotification($tweet));
         return new JsonResponse($tweet->load('user:name,id'), 201);
     }
     
@@ -54,7 +69,7 @@ class TweetsController extends Controller
      */
     public function show($id)
     {
-        $tweet = Tweet::with(['user','comments'])->find($id);
+        $tweet = Tweet::with(['user','tweetComments'])->find($id);
         if(!$tweet){
             return response()->json([
                 'message' => 'هذه التويتة غير موجودة'
