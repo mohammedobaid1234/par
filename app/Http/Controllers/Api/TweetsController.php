@@ -25,7 +25,16 @@ class TweetsController extends Controller
     {
         // dd( $request->header('User-Agent'));
         $tweets = Tweet::with('user:id,name,type','tweetComments.user:id,name')->paginate(3);
-        return new JsonResponse($tweets);
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => ' التغريدات'
+            ],
+            'data' => $tweets
+        ],
+         404); 
+        // return new JsonResponse($tweets);
     }
     // PostmanRuntime/7.28.4
 
@@ -39,9 +48,18 @@ class TweetsController extends Controller
     {
         $user = User::where('id', $request->post('user_id'))->firstOrFail();
         if($user->type == 'عضو فعال') {
-            return new JsonResponse([
-                'message' => 'هذه العملية غير مسموحة'
-            ], 403);
+            return  response()->json([
+                'status' => [
+                    'code' => 403,
+                    'status' => false,
+                    'message' => 'هذه العملية غير مسموحة'
+                ],
+                'data' => null
+            ],
+             403);
+            // return new JsonResponse([
+            //     'message' => 'هذه العملية غير مسموحة'
+            // ], 403);
         }
         $request->validate([
             'body' => 'required',
@@ -58,7 +76,16 @@ class TweetsController extends Controller
         $tweet = Tweet::create($request->all());
         $users = User::where('id', '<>', $tweet->user_id)->get();
         Notification::send($users, new TweetCreatedNotification($tweet));
-        return new JsonResponse($tweet->load('user:name,id'), 201);
+        return  response()->json([
+            'status' => [
+                'code' => 201,
+                'status' => true,
+                'message' => 'تم اضافة التغريدة'
+            ],
+            'data' => $tweet->load('user:name,id')
+        ],
+         201);
+        // return new JsonResponse($tweet->load('user:name,id'), 201);
     }
     
     /**
@@ -71,11 +98,26 @@ class TweetsController extends Controller
     {
         $tweet = Tweet::with(['user:id,name','tweetComments.user:id,name'])->find($id);
         if(!$tweet){
-            return response()->json([
-                'message' => 'هذه التويتة غير موجودة'
-            ], 401);
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => false,
+                    'message' => 'هذا التغريدة غير موجود'
+                ],
+                'data' => null
+            ],
+             404);
         }
-        return new JsonResponse($tweet);
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'هذه التغريدة موجود'
+            ],
+            'data' => $tweet
+        ],
+         200);
+        // return new JsonResponse($tweet);
     }
     
     /**

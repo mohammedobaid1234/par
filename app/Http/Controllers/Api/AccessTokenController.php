@@ -18,32 +18,61 @@ class AccessTokenController extends Controller
 
         $user = User::where('phone_number', $request->phone_number)->first();
         if(!$user){
-            return  response()->json(['message' => 'هذا الرقم غير موجود'],
-             401); 
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => false,
+                    'message' => 'هذا العنصر غير موجود'
+                ],
+                'data' => null
+            ],
+             404); 
         }
-        return $user;
+        return  response()->json([
+                'status' => [
+                    'code' => 200,
+                    'status' => true,
+                    'message' => 'هذا العنصر موجود'
+                ],
+                'data' => $user
+            ],
+             200); 
+        // return $user;
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'phone_number' => ['required'],
-            'password' => ['required'],
             'device_name' => ['required']
         ]);
         
         $user = User::where('phone_number', $request->phone_number)
         ->first();
 
-        if(!$user || !Hash::check($request->password, $user->password)){
-            return  response()->json(['message' => 'الرقم وكلمة المرور غير صحيحان '],
-             401);
+        if(!$user){
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => false,
+                    'message' => 'هذا العنصر غير موجود'
+                ],
+                'data' => null
+            ],
+             404); 
         }
         $token = $user->createToken($request->device_name);
             
             return  response()->json([
-                'token' => $token->plainTextToken,
-                'user' =>  $user
+                'status' => [
+                    'code' => 200,
+                    'status' => true,
+                    'message' => "تم تسجيل الدخول"
+                ],
+                'data' =>[
+                    'token' => $token->plainTextToken,
+                    'user' =>  $user,
+                ]
             ], 200);
     }
     public function destroy()
@@ -56,8 +85,14 @@ class AccessTokenController extends Controller
         // Revoke current access token
         $user->currentAccessToken()->delete();
         return response()->json([
-            'message' => 'تم تسجيل الخروج'
-        ], 200);
+            'status' => [
+                'code' => 204,
+                'status' => true,          
+                'message' => 'تم تسجيل الخروج'
+            ],
+            'data' => null
+        ], 204);
+        
     }
 
 }

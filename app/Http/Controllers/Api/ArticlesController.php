@@ -15,7 +15,17 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        return Article::paginate(3);
+        
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => ' مقالات'
+            ],
+            'data' => Article::paginate(3)
+        ],
+         200); 
+        
 
     }
 
@@ -39,17 +49,41 @@ class ArticlesController extends Controller
     public function show($id)
     {
         $article =  Article::where('id',$id)->first(['id','title', 'article_url', 'image_url',]);
-        if(!$article){
-            return response()->json([
-                'message' => 'هذا المقال غير موجود'
-            ],401);
+        if(!$article){   
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => false,
+                    'message' => 'هذا المقال غير موجود'
+                ],
+                'data' => null
+            ],
+             404); 
         }
-        return $article;
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'هذا المقال موجود'
+            ],
+            'data' => $article
+        ],
+         200); 
+        
     }
 
     public function articleToday()
     {
-        return Article::latest()->first();
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => ' مقالات'
+            ],
+            'data' => Article::latest()->first()
+        ],
+         404); 
+        // return Article::latest()->first();
     }
     /**
      * Update the specified resource in storage.

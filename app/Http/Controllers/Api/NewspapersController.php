@@ -15,7 +15,16 @@ class NewspapersController extends Controller
      */
     public function index()
     {
-        return Newspaper::paginate(3);
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => ' الجرائد الالكترونية'
+            ],
+            'data' => Newspaper::paginate(3)
+        ],
+         404); 
+        // return Newspaper::paginate(3);
 
         
     }
@@ -41,16 +50,41 @@ class NewspapersController extends Controller
     {
         $news =  Newspaper::where('id',$id)->first(['id','title', 'newspaper_url']); 
         if(!$news){
-            return response()->json([
-                'message' => 'هذا الجريدة غير موجودة'
-            ],401);
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => false,
+                    'message' => 'هذا الجريدة غير موجود'
+                ],
+                'data' => null
+            ],
+             404);
         }  
-        return $news;
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'هذه الجريدة موجود'
+            ],
+            'data' => $news
+        ],
+         200);
+        // return $news;
+        
     }
 
     public function newspaperToday()
     {
-        return Newspaper::latest()->first();
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => ' جريدة اليوم'
+            ],
+            'data' => Newspaper::latest()->first()
+        ],
+         404); 
+        // return Newspaper::latest()->first();
     }
 
     /**
