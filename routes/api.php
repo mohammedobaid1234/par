@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\VideosController;
 use App\Http\Controllers\Api\CommentsController;
 use App\Http\Controllers\Api\LikesController;
-
+use App\Http\Controllers\Api\NotificationsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

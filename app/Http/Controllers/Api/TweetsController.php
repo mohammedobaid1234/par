@@ -77,7 +77,7 @@ class TweetsController extends Controller
         }
         return new JsonResponse($tweet);
     }
-
+    
     /**
      * Update the specified resource in storage.
      *

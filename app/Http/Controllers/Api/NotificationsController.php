@@ -13,7 +13,7 @@ class NotificationsController extends Controller
         $this->middleware('auth:sanctum')->except(['show', 'index']);
     }
     public function index($id) {
-        $notUser = DB::table('notifications')->where('notifiable_id', $id)->get();
+        $notUser = DB::table('notifications')->where('notifiable_id', $id)->get(['data']);
         return $notUser;
     }
 }
