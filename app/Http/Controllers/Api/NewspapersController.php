@@ -23,7 +23,7 @@ class NewspapersController extends Controller
             ],
             'data' => Newspaper::paginate(3)
         ],
-         404); 
+         200); 
         // return Newspaper::paginate(3);
 
         

@@ -20,7 +20,7 @@
                 <input type="text" hidden name="council_id" value="{{$type}}">
             @endif
             <div style="padding-top: 10px" class="form-group">
-                <x-form-input type='hidden' name='type' label='' value='عضو مجلس' />
+                <x-form-input type='hidden' name='type' label='' value='2' />
 
                 <button type="submit" class="btn" style="background: #1e2f48;color:#fff">تسجيل عضو</button>
             </div>

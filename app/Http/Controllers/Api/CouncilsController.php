@@ -16,7 +16,15 @@ class CouncilsController extends Controller
      */
     public function index()
     {
-        return Council::whereNull('parent_id')->get(['name','id']);
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'المجالس الرئيسية'
+            ],
+            'data' => Council::whereNull('parent_id')->get(['name','id'])
+        ],
+         200); 
     }
 
     /**
@@ -40,14 +48,29 @@ class CouncilsController extends Controller
     {
         $parent_council = Council::with('users','children')->find($id);
         if(!$parent_council){
-            return response()->json([
-                'message' => 'هذا المجلس غير موجود'
-            ],401);
+
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => true,
+                    'message' => 'هذا المجلس غير موجود'
+                ],
+                'data' => null
+            ],
+             404);
         }
         if($parent_council->children->count() > 0 ){
           
            $councils = $parent_council->load('children:id,name,parent_id');
-           return $parent_council->children;
+           return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'المجالس الفرعية'
+            ],
+            'data' => $parent_council->children
+        ],
+         200);
         }
         $council = $parent_council->load('children.users');
         $users = collect([]);
@@ -62,7 +85,15 @@ class CouncilsController extends Controller
            
             $users->push($array);  
         }
-        return $users;
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'أعضاء المجلس'
+            ],
+            'data' => $users
+        ],
+         200);
     
     }
 

@@ -31,7 +31,7 @@
                     <td>{{ $user->about }}</td>
                     <td><img width="60" style="border-radius: 6px"  src="{{ $user->image_path }}" alt=""></td>
             
-                    @if ($user->type == "عضو مجلس")    
+                    @if ($user->type == 2)    
                     <td id='type' style="width: 25%">
                         @if ($user->council->parent == null)
                            {{ $user->council->name }}
@@ -41,7 +41,7 @@
                         @endif
                     </td>
                     @else
-                    <td>{{$user->type}}</td>
+                    <td>{{$user->user_type}}</td>
                     @endif
                     <td>{{$user->created_at}}</td>
                        <td>

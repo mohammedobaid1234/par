@@ -34,7 +34,15 @@ class FavoritesController extends Controller
         ]);
         
         $favorite_report = Favorite::create($request->all());
-        return new JsonResponse('added successfully', 201);
+        return  response()->json([
+            'status' => [
+                'code' => 201,
+                'status' => true,
+                'message' => 'تم اضافة التقرير الى المفضلة'
+            ],
+            'data' => $favorite_report
+        ],
+         201); 
         
     }
 
@@ -46,9 +54,29 @@ class FavoritesController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if(!$user){
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => true,
+                    'message' => 'هذا العضو غير موجود'
+                ],
+                'data' => null
+            ],
+             404);
+        }
         $favorite_report = $user->load('favorites');
-        return $favorite_report->reports;
+
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'عرض التقارير المفضلة'
+            ],
+            'data' => $favorite_report->reports
+        ],
+         200);
 
     }
 

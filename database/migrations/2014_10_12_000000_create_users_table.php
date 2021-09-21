@@ -26,7 +26,10 @@ class CreateUsersTable extends Migration
             $table->string('full_name')->nullable();
             $table->date('birthday')->nullable();
             $table->enum('marital_status', ['أعزب', 'متزوج'])->nullable();
-            $table->enum('type', ['عضو فعال', 'عضو مجلس', 'أدمن'])->default('عضو فعال');
+            $table->enum('type', [1,2,3])->default(1);
+            // 1=> عضو فعال
+            // 2=> عضو مجلس
+            // 3=> أدمن
             $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();

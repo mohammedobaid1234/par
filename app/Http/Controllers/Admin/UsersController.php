@@ -104,9 +104,9 @@ class UsersController extends Controller
         $request->validate([
             'name' => 'required|unique:users,name',
             'phone_number' => 'required|unique:users,phone_number',
-            'type' => ['required',Rule::in(['عضو مجلس','عضو فعال', 'أدمن'])],
+            'type' => ['required',Rule::in([1,2,3])],
         ]);
-       if($request->type == 'أدمن'){
+       if($request->type == 3){
            $request->validate([
             'password' => 'required',
            ]);
@@ -177,9 +177,9 @@ class UsersController extends Controller
         $request->validate([
             'name' => 'required|unique:users,name,'. $id,
             'phone_number' => 'required|unique:users,phone_number,'. $id,
-            'type' => ['required',Rule::in(['عضو مجلس','عضو فعال', 'أدمن'])],
+            'type' => ['required',Rule::in([1,2,3])],
         ]);
-       if($request->type == 'أدمن'){
+       if($request->type == 3){
            $request->validate([
             'password' => 'required',
            ]);

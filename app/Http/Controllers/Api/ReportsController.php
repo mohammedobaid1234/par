@@ -16,7 +16,16 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        return Report::select(['title','body'])->paginate(3);
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => ' الأخبار'
+            ],
+            'data' => Report::select(['title','body'])->paginate(3)
+        ],
+         200); 
+        // return Report::select(['title','body'])->paginate(3);
     }
     
     /**
@@ -40,11 +49,25 @@ class ReportsController extends Controller
     {
         $report =  Report::where('id',$id)->first(['title','body']);
         if(!$report){
-            return response()->json([
-                'message' => 'هذا الخبر غير موجود'
-            ],401);
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => false,
+                    'message' => 'هذا الخبر غير موجود'
+                ],
+                'data' => null
+            ],
+             404);
         }
-        return $report;
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'هذه الخبر موجود'
+            ],
+            'data' => $report
+        ],
+         200);
          
     }
 

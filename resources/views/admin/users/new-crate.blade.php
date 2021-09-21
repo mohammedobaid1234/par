@@ -5,19 +5,19 @@
         <x-form-input name='phone_number' label='رقم الجوال' />
         <label for="" style="padding-right: 10px">أختر نوع العضو</label>
           <div class="form-check" style="margin: 10px">
-            <input class="form-check-input" type="radio" name="type"  id="type1" value="عضو مجلس">
+            <input class="form-check-input" type="radio" name="type"  id="type1" value="2">
             <label class="form-check-label" for="type1">
               عضو مجلس
             </label>
           </div>
           <div class="form-check" style="margin: 10px">
-            <input class="form-check-input" type="radio" name="type" id="type2" value="عضو فعال" checked>
+            <input class="form-check-input" type="radio" name="type" id="type2" value="1" checked>
             <label class="form-check-label" for="type2">
               عضو فعال
             </label>
           </div>
           <div class="form-check" style="margin: 10px">
-            <input class="form-check-input" type="radio" name="type" value="أدمن" id="type3">
+            <input class="form-check-input" type="radio" name="type" value="3" id="type3">
             <label class="form-check-label" for="type1">
                 أدمن
             </label>

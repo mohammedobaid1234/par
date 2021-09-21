@@ -17,6 +17,7 @@ class CommentsController extends Controller
     {
         $this->middleware('auth:sanctum')->except(['show', 'index']);
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -33,15 +34,43 @@ class CommentsController extends Controller
             ]);
         }
         $comment = Comment::create($request->all());
-        $tweet = Tweet::where('id', $request->tweet_id)->firstOrFail();
+        $tweet = Tweet::where('id', $request->tweet_id)->first();
+        if(!$tweet){
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => true,
+                    'message' => 'هذا التغريدة غير موجود'
+                ],
+                'data' => null
+            ],
+             404);
+        }
+        if(!$tweet) {
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => true,
+                    'message' => 'هذه التغريدة غير موجودة'
+                ],
+                'data' => null
+            ],
+             404);
+        }
         $tweet->update([
             'comments' => $tweet->comments + 1
         ]);
         $user = User::findOrFail($request->post('user_id'));
         $user->notify(new CommentCreatedNotification($comment));
-        return new JsonResponse([
-            'success' => 'هذا التعليق تمت اضافته',
-            'comment' => $comment->load('user'),
-        ], 201);
+
+        return  response()->json([
+            'status' => [
+                'code' => 201,
+                'status' => true,
+                'message' => 'تم انشاء تعليق'
+            ],
+            'data' => $comment->load('user')
+        ],
+         201); 
     }
 }

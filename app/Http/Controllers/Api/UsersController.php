@@ -40,12 +40,26 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         if(!$user){
-            return response()->json([
-                'message' => 'هذا العضو غير موجود'
-            ],401);
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => true,
+                    'message' => 'هذا العضو غير موجود'
+                ],
+                'data' => null
+            ],
+             404);
         }
         $user =  $user->load('tweets');
-        return $user;
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'عرض بيانات المستخدم'
+            ],
+            'data' => $user
+        ],
+         200); 
 
         
     }
@@ -60,6 +74,17 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
+        if(!$user) {
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => true,
+                    'message' => 'هذا العضو غير موجود'
+                ],
+                'data' => null
+            ],
+             404);
+        }
         $request->validate([
             'name' => 'sometimes|required|min:3|unique:users,name,'. $id,
             'image' => 'nullable',
@@ -79,8 +104,15 @@ class UsersController extends Controller
         }
        
         $user->update($request->all());
-        return new JsonResponse($user, 201);
-
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'تم تعديل بيانات العضو'
+            ],
+            'data' => $user
+        ],
+         200); 
     }
 
     /**

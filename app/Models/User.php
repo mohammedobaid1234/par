@@ -111,12 +111,23 @@ class User extends Authenticatable
     }
     public function getCouncilNameAttribute($id)
     {
-        if($this->type == "عضو مجلس"){
+        if($this->type == 2){
             if($this->council->parent == null){
                 return $this->council->name;
             }else{
                 return $this->council->parent->name;
             }
         }
+    }
+
+    public function getUserTypeAttribute()
+    {
+        $type = $this->type;
+        if($type == 1){
+            return 'عضو فعال';
+        }if($type == 2){
+            return 'عضو مجلس';
+        }
+        return 'أدمن';
     }
 }

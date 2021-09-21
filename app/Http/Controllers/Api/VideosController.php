@@ -15,7 +15,16 @@ class VideosController extends Controller
      */
     public function index()
     {
-        return Video::paginate(3);
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => ' مقاطع الفيديو'
+            ],
+            'data' => Video::paginate(3)
+        ],
+         200);
+        // return Video::paginate(3);
 
         
     }
@@ -41,17 +50,41 @@ class VideosController extends Controller
     {
         $video = Video::where('id',$id)->first(['id','title', 'video_url', 'image_url',]);
         if(!$video){
-            return response()->json([
-                'message' => 'هذا الفيديو غير موجود'
-            ],401);
+            return  response()->json([
+                'status' => [
+                    'code' => 404,
+                    'status' => false,
+                    'message' => 'هذا الفيديو غير موجود'
+                ],
+                'data' => null
+            ],
+             404); 
         }
-        return $video;
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => 'هذا الفيديو موجود'
+            ],
+            'data' => $video
+        ],
+         200);
+        // return $video;
         
     }
 
     public function videoToday()
     {
-        return Video::latest()->first();
+        return  response()->json([
+            'status' => [
+                'code' => 200,
+                'status' => true,
+                'message' => ' مقالات'
+            ],
+            'data' => Video::latest()->first()
+        ],
+         200); 
+        // return Video::latest()->first();
     }
     /**
      * Update the specified resource in storage.
